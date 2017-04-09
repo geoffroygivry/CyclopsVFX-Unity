@@ -1,0 +1,1 @@
+cmd.exe /K C:\Dropbox\Cyclops\Apps\WinBash\env.cmd

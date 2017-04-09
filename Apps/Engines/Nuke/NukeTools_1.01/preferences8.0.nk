@@ -1,0 +1,61 @@
+Preferences {
+ inputs 0
+ name Preferences
+ CacheLimit 10
+ preserve_caches true
+ viewer_texture_vram 384
+ diskCacheGB 40
+ selectedGPUDeviceName "no GPU available"
+ platformPathRemaps ""
+ FloatingWindowHint "Normal (KDE)"
+ ShowDialogsUnderCursor false
+ maxPanels 3
+ colorPickerDefaultMode "floating color picker"
+ UIFont "DejaVu Sans"
+ UILabelColor 0xffffffff
+ NodeColour01Color 0x72c672ff
+ NodeColour02Color 0xffc9aaff
+ NodeColour07Color 0x12802dff
+ NodeColour08Color 0x12002dff
+ NodeColourClass12 viewer
+ NodeColour12Color 0x272d29ff
+ NodeColourClass13 Read
+ NodeColour13Color 0x4f5179ff
+ LabelColor 0xff
+ postage_stamp_mode "Static frame"
+ node_name_bg_blend 0.62
+ LabelFont "DejaVu Sans"
+ DAGBackColor 0x1f1f1fff
+ OverlayColor 0x484848ff
+ ArrowColorLeft 0x7a577cff
+ ArrowColorRight 0x7a577cff
+ ArrowColorUp 0x7376ff
+ ArrowColorDown 0xc6ff79ff
+ expression_arrows false
+ clone_arrows false
+ goofy_foot false
+ DfltBezAutokey false
+ rgb_only true
+ defaultBufferDepth half-float
+ TextureSize 1024x1024
+ viewer_bg_color 0x252525ff
+ viewer_bg_color_3D 0x3f4949ff
+ Viewer3DControlEmulation Maya
+ viewer_handle_pick_size_3d 11.4
+ icon_size_base 100
+ icon_size_power 0
+ UIRotoPointColor 0xffff
+ UIRotoCurveColor 0xff0000ff
+ UIRotoTransformJackColor 0xac00ff
+ ScriptEditorFont "Bitstream Vera Sans"
+ ScriptEditorFontSize 15
+ echoAllCommands true
+ addUserKnob {20 J_Ops}
+ addUserKnob {7 j_ops_ver +INVISIBLE}
+ j_ops_ver 2.0201
+ addUserKnob {6 j_ops_enable_drop l "Improved drag and drop" t "Enable/disable a somewhat improved drag and drop behaviour. Requires Nuke restart to take effect. Adds creation of geo, camera, light and vectorfield nodes based on incoming file extensions, as well as support for sequences when dropping folders onto DAG. Warning: does not observe hash vs regex file path expression, due to Nuke python functions ignoring it." +STARTLINE}
+ j_ops_enable_drop true
+ addUserKnob {26 j_ops_dropdivider_label l "Drag And Drop"}
+ addUserKnob {6 j_ops_drop_recurse l "Recurse directories" t "Enable/disable recursion into directories dropped on DAG. When enabled will result in entire directory structure being imported into DAG, when disabled only the directory dropped will be imported (ie none of its sub directories)" -STARTLINE}
+ j_ops_drop_recurse true
+}

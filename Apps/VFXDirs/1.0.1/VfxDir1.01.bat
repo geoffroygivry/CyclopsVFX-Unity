@@ -1,0 +1,1 @@
+python "C:\Dropbox\Cyclops\Apps\VFXDirs\1.0.1\VFXDirs1.01.py"
