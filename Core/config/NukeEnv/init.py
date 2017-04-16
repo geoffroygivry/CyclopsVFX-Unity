@@ -23,11 +23,11 @@
 
 from nukeEnv import NukePythonPath
 
+
 def goInit():
     NukePythonPath()
-    print '\n\nWelcome to Digital Illuminati!'
+    print '\n\nWelcome to Cyclops VFX'
     print "\n===========================\n\n"
-    
+
+
 goInit()
-
-

@@ -1,1 +1,1 @@
-cmd.exe /K C:\Dropbox\Cyclops\Apps\WinBash\env.cmd
+cmd.exe /K C:\Dropbox\CyclopsVFX\Apps\WinBash\env.cmd

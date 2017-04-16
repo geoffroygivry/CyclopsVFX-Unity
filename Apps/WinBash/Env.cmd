@@ -1,8 +1,8 @@
-title Cyclops
+title CyclopsVFX
 
 ::set up environment variables
 set DI_ROOT=/Dropbox
-set CYC_ROOT=%DI_ROOT%/Cyclops
+set CYC_ROOT=%DI_ROOT%/CyclopsVFX
 set CYC_HYDRA_PATH=%CYC_ROOT%/Hydra
 set CYC_CORE_PATH=%CYC_ROOT%/Core/config
 set CYC_NUKE_ENV=%CYC_ROOT%/Core/config/NukeEnv
@@ -23,7 +23,7 @@ set NUKE_PATH=%CYC_NUKE_ENV%
 set SHOW_PATH=%DI_ROOT%/jobs
 
 :: creation of "Aliases"
-doskey nuke=nuke8.0.exe $*
+doskey nuke="C:\Program Files\Nuke9.0v7\Nuke9.0.exe" --nukex $*
 doskey show=set JOB=$*
 doskey shot=set SHOT=$*
 doskey task=set TASK=$*
@@ -31,9 +31,8 @@ doskey maya="C:\Program Files\Autodesk\Maya2015\bin\maya.exe" $*
 doskey clarisse="C:\Users\Geoffroy\Documents\clarisse\clarisse.bat" $*
 set SHOW=%JOB%
 
-:: start /B in cmd is the same as the '&' in linux, initialising the Dailies submissions database
-::start /B mongod.exe --dbpath C:\Dropbox\Hydra_Db && cd C:\ && cls
-cd C:\Dropbox\02_webDev\Meteor\subView
-start /B meteor run
-cd C:\
 cls
+type welcome.txt
+cd C:\
+
+
