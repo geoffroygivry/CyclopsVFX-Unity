@@ -1,2 +1,2 @@
 set VFXDIRVERSION=1.0.3
-python "C:\Dropbox\Cyclops\Apps\VFXDirs\%VFXDIRVERSION%\VFXDirs%VFXDIRVERSION%.py"
+python "C:\Dropbox\CyclopsVFX\Apps\VFXDirs\%VFXDIRVERSION%\VFXDirs%VFXDIRVERSION%.py"

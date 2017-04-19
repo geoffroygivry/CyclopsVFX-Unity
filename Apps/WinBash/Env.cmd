@@ -11,6 +11,7 @@ set CYC_RV_ENV=%CYC_ROOT%/Core/config/RVEnv
 set CYC_MARI_ENV=%CYC_ROOT%/Core/config/MariEnv
 set CYC_3DE_ENV=%CYC_ROOT%/Core/config/3DeEnv
 set CYC_CLARISSE_ENV=%CYC_ROOT%/Core/config/ClarisseEnv
+set CYC_SHOW_ENV=%CYC_ROOT%/Core/config/ShowEnv
 set CYC_POLYPHEMUS_PATH=%CYC_ROOT%/Apps/Polyphemus
 set CYC_METEOR_PATH=%DI_ROOT%/02_webDev/Meteor/subView
 set CYC_STEROPES_PATH=%CYC_ROOT%/Apps/Steropes
@@ -23,13 +24,15 @@ set NUKE_PATH=%CYC_NUKE_ENV%
 set SHOW_PATH=%DI_ROOT%/jobs
 
 :: creation of "Aliases"
-doskey nuke="C:\Program Files\Nuke9.0v7\Nuke9.0.exe" --nukex $*
+::doskey nuke="C:\Program Files\Nuke9.0v7\Nuke9.0.exe" --nukex $*
+doskey nuke=python %CYC_SHOW_ENV%/show.py $*
 doskey show=set JOB=$*
+set SHOW=%JOB%
 doskey shot=set SHOT=$*
 doskey task=set TASK=$*
 doskey maya="C:\Program Files\Autodesk\Maya2015\bin\maya.exe" $*
 doskey clarisse="C:\Users\Geoffroy\Documents\clarisse\clarisse.bat" $*
-set SHOW=%JOB%
+
 
 cls
 type welcome.txt

@@ -36,7 +36,7 @@ QSpinBox {color: white;
 				background-color:orange;
 				background: rgb(75,75,75);
 				selection-color: white;
-				selection-background-color: orange;}				
+				selection-background-color: orange;}
 QTextBrowser {border: 1px solid orange;
 				color: white;
 				background: rgb(100,100,100);
@@ -101,7 +101,7 @@ QComboBox {
      subcontrol-origin: padding;
      subcontrol-position: top right;
      width: 20px;
-     
+
  background-color:QLinearGradient(
         x1:0, y1:0,
         x2:0, y2:1,
@@ -109,7 +109,7 @@ QComboBox {
         stop:0.5 #a1a6aa,
         stop:1 #7f8387
     );
-    
+
      border-left-width: 1px;
      border-left-color: #2d3033;
      border-left-style: solid;
@@ -117,18 +117,18 @@ QComboBox {
      border-bottom-right-radius: 8px;
  }
  QComboBox::down-arrow {
-    image: url(C:/Dropbox/Cyclops/Apps/Steropes/StyleSheet/images/down_arrow.png);
+    image: url(C:/Dropbox/CyclopsVFX/Apps/Steropes/StyleSheet/images/down_arrow.png);
  }
  QComboBox::down-arrow:on {
-    image: url(C:/Dropbox/Cyclops/Apps/Steropes/StyleSheet/images/up_arrow.png);
- }		
+    image: url(C:/Dropbox/CyclopsVFX/Apps/Steropes/StyleSheet/images/up_arrow.png);
+ }
 
 
 QComboBox QAbstractItemView {
     border: 2px solid darkgray;
-    selection-background-color: gray;	
- }				
-		
+    selection-background-color: gray;
+ }
+
 QMessageBox{background: rgb(50,50,50);}
 QListWidget {background: rgb(70,70,70);
 				color: white;
@@ -162,7 +162,7 @@ QCalendar {background: rgb(100,100,100);
 				selection-background-color: orange;
 				alternate-background-color: rgb(25,25,25);
 				border: 1px solid orange;}
-				
+
 QTableWidget {background: rgb(100,100,100);
 				color: white;
 				selection-color: white;
@@ -215,7 +215,7 @@ QTextEdit[labelClass="DailiesComment"]{
 
 QLabel[labelClass="Main"]{
         background: rgb(20,20,20);
-        background-image: url(/Dropbox/Cyclops/Apps/Steropes/SteropesDailies/resources/DailiesBanner04.jpg);
+        background-image: url(/Dropbox/CyclopsVFX/Apps/Steropes/SteropesDailies/resources/DailiesBanner04.jpg);
         font-size : 24px;
         font-weight : bold;
         font-family : Arial;
@@ -245,7 +245,7 @@ QLabel[labelClass="MiniIcon"]{
 QWidget{
         background: rgb(40,40,40);
         padding : 10px
-} 
+}
 
 QLineEdit[labelClass="frameIO"] {
 				color: white;
@@ -256,7 +256,7 @@ QListWidget{
         show-decoration-selected: 1;
         border-radius : 10px;
         outline: none;
-} 
+}
 
 QListView::item:selected {
     border: 3px solid #6a6ea9;
@@ -355,10 +355,10 @@ QScrollBar::sub-line:vertical {
 QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:pressed , QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:pressed {
       background: none;
       }
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { 
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
       background: none;
       }
-QScrollBar::down-arrow:vertical { 
+QScrollBar::down-arrow:vertical {
       background: none;
       }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {

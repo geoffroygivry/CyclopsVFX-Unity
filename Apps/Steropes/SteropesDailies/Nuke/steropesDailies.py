@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 
-#The MIT License (MIT)
+# The MIT License (MIT)
 #
-#Copyright (c) 2015 Geoffroy Givry
+# Copyright (c) 2015 Geoffroy Givry
 #
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 
 import nuke
@@ -46,9 +46,12 @@ taskforDb = "Comp"
 
 class nukeSteropesDailiesCore(DailiesPanel):
     '''The Nuke dailies submission panel'''
+
     def __init__(self):
         super(nukeSteropesDailiesCore, self).__init__()
 
+        NukeSelNode = nuke.selectedNode()
+        self.thumbMeta = unicode(NukeSelNode.metadata()['exr/nuke/Thumbnail'])
 
         self.setThum()
         self.setItemInfo()
@@ -71,7 +74,8 @@ class nukeSteropesDailiesCore(DailiesPanel):
                 if I.split('.')[2] == 'thumbnail':
                     thumbList.append(I)
         thumbnailPic = os.path.join(path, thumbList[0])
-        self.subItemPic.setPixmap(QPixmap(thumbnailPic))
+        # self.subItemPic.setPixmap(QPixmap(thumbnailPic))
+        self.subItemPic.setPixmap(QPixmap(self.thumbMeta))
 
     def setItemInfo(self):
 
@@ -80,7 +84,6 @@ class nukeSteropesDailiesCore(DailiesPanel):
         pathToFile = pathToFile.replace('%04d', '####')
         finalTextItemInfo = '%s\nBy %s\n%s' % (pathToFile, artistName, timeStamp)
         self.subItemInfo.setText(finalTextItemInfo)
-
 
     def setMinFrame(self):
 
@@ -112,14 +115,6 @@ class nukeSteropesDailiesCore(DailiesPanel):
         maxNum = max([r.split('.')[1] for r in newPath])
         self.frameOut.setText(maxNum)
 
-    def copyThumb(self):
-      NukeSelNode = nuke.selectedNode()
-      thumbMeta = unicode(NukeSelNode.metadata()['exr/nuke/Thumbnail'])
-      self.newName = unicode(thumbMeta.split('/')[-1])
-      self.newName = unicode(self.newName.replace('.', '', 1))
-      shutil.copy(thumbMeta, (os.getenv('CYC_METEOR_PATH') + '/public/' + self.newName))
-      
-
     def goDb(self):
 
         NukeSelNode = nuke.selectedNode()
@@ -129,10 +124,8 @@ class nukeSteropesDailiesCore(DailiesPanel):
         bckScript = unicode(NukeSelNode.metadata()['exr/nuke/NukeScript'])
         frameFirst = unicode(self.frameIn.text())
         frameLast = unicode(self.frameOut.text())
-        self.copyThumb()
-        hQuery.sendToDailies(pathToFile, commentField, bckScript, frameFirst, frameLast, self.newName)
+        hQuery.sendToDailies(pathToFile, commentField, bckScript, frameFirst, frameLast, self.thumbMeta)
         self.close()
-
 
 
 def start():

@@ -1,34 +1,43 @@
-#The MIT License (MIT)
+# The MIT License (MIT)
 #
-#Copyright (c) 2015 Geoffroy Givry
+# Copyright (c) 2015 Geoffroy Givry
 #
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 import os
-from pymongo import Connection
+# from pymongo import Connection
 from pymongo import MongoClient
 import datetime
-import shutil
+import boto3
+from boto3.s3.transfer import S3Transfer
+
+from Core.config import cyc_config as cfg
+
+server = MongoClient(cfg.MONGODB)
+
+
+def send_to_S3(img):
+    transfer = S3Transfer(boto3.client('s3', cfg.AWS_REGION, aws_access_key_id=cfg.ACCESS_KEY_ID, aws_secret_access_key=cfg.ACCESS_SECRET_KEY))
+    transfer.upload_file(img, cfg.BUCKET_NAME, os.path.basename(img), extra_args={'ACL': 'public-read'})
 
 
 def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show=os.getenv('JOB'), shot=os.getenv('SHOT'), task=os.getenv('TASK')):
-
     """ function to create a new dailies submission
     example :
     from Hydra.core import hQuery
@@ -36,7 +45,6 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     """
     # make connection with MongoDb
     # server = Connection()
-    server = MongoClient('mongodb://127.0.0.1:3001/meteor')
 
     # format = "%a %d %b %Y at %H:%M:%S "
     # now = datetime.datetime.now()
@@ -45,9 +53,9 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     now = today.strftime(format)
 
     # this is the name of the Data base
-    db = server['meteor']
+    db = server['hydra']
 
-    dailiesCollections = db['DailiesSubmissions']
+    dailiesCollections = db['dailies_submissions']
 
     # creation of the dailies submission entry
     Submission = dict()
@@ -66,18 +74,15 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['comment'] = comments
     Submission['thumbnail'] = thumb
     dailiesCollections.save(Submission)
+    send_to_S3(thumb)
 
 
 def PublishIt(name, path, comments, task=os.getenv('TASK')):
-
     """ module to create a new Publish submission
     example :
     from Hydra.core import hQuery
     hQuery.PublishIt('MainWall', 'this/is/the/path', 'this is the comment')
     """
-
-    # make connection with MongoDb
-    server = Connection()
 
     # format = "%a %d %b %Y at %H:%M:%S "
     # now = datetime.datetime.now()
@@ -85,8 +90,8 @@ def PublishIt(name, path, comments, task=os.getenv('TASK')):
     today = datetime.datetime.today()
     now = today.strftime(format)
 
-    # this is the name of the Data base
-    db = server['Hydra_server']
+    # this is the name of the Database
+    db = server['hydra']
 
     PubCollections = db['PublishSubmissions']
 
