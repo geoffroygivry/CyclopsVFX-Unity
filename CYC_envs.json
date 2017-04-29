@@ -1,0 +1,21 @@
+{
+    "CYC_envs": {
+        "CYC_3DE_ENV": "/Dropbox/CyclopsVFX/Core/config/3DeEnv",
+        "CYC_CLARISSE_ENV": "/Dropbox/CyclopsVFX/Core/config/ClarisseEnv",
+        "CYC_CORE_PATH": "/Dropbox/CyclopsVFX/Core/config/",
+        "CYC_ENGINE_NUKE": "/Dropbox/CyclopsVFX/Apps/Engines/Nuke",
+        "CYC_HYDRA_PATH": "/Dropbox/CyclopsVFX/Hydra",
+        "CYC_ICON": "/Dropbox/CyclopsVFX/icons",
+        "CYC_MARI_ENV": "/Dropbox/CyclopsVFX/Core/config/MariEnv",
+        "CYC_MAYA_ENV": "/Dropbox/CyclopsVFX/Core/config/MayaEnv",
+        "CYC_NUKE_ENV": "/Dropbox/CyclopsVFX/Core/config/NukeEnv",
+        "CYC_POLYPHEMUS_PATH": "/Dropbox/CyclopsVFX/Apps/Polyphemus",
+        "CYC_ROOT": "/Dropbox/CyclopsVFX",
+        "CYC_RV_ENV": "/Dropbox/CyclopsVFX/Core/config/RVEnv",
+        "CYC_SHOW_ENV": "/Dropbox/CyclopsVFX/Core/config/ShowEnv",
+        "CYC_STEROPES_PATH": "/Dropbox/CyclopsVFX/Apps/Steropes",
+        "DI_ROOT": "/Dropbox",
+        "NUKE_PATH": "/Dropbox/CyclopsVFX/Core/config/NukeEnv",
+        "SHOW_PATH": "/Dropbox/jobs"
+    }
+}
