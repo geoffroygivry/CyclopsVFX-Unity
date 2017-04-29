@@ -1,0 +1,36 @@
+.date-sub{
+    text-align: right;
+}
+.thumb-sub {
+    max-width: 75px;
+    height: auto;
+}
+.img-shot{
+    max-width: 200px;
+    height: auto;
+}
+.infos {
+    color: white;
+}
+blockquote {
+    font-size: 11px;
+}
+.note{
+    background-color: #191d21;
+}
+.launch-apps {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.launch-apps li img {
+    max-width: 50px;
+    height: auto;
+}
+ul
+{
+list-style-type: none;
+}
+.launch-apps .btn {
+    margin-bottom: 10px;
+}
