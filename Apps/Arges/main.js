@@ -8,6 +8,21 @@ require('electron-reload')(__dirname)
 
 const path = require('path')
 const url = require('url')
+var creds = require('./credentials.js')
+
+var MongoClient = require('mongodb').MongoClient;
+var url2 = creds.MONGODB();
+
+MongoClient.connect(url2, function(err, db) {
+
+    var cursor = db.collection('dailies_submissions').find();
+
+    cursor.each(function(err, doc) {
+
+        console.log(doc);
+
+    });
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,7 +36,8 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 900, height: 600});
   mainWindow.setMenu(null);
-  mainWindow.webContents.openDevTools({detach:true});
+  mainWindow.maximize()
+  // mainWindow.webContents.openDevTools({detach:true});
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
