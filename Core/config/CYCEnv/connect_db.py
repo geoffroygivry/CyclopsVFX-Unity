@@ -20,22 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
-# from pymongo import Connection
 from pymongo import MongoClient
-# import datetime
-# import boto3
-# from boto3.s3.transfer import S3Transfer
-
 from Core.config import cyc_config as cfg
 
 server = MongoClient(cfg.MONGODB)
-
-
-def create_show(show_name):
-    db = server['hydra']
-    shows_collection = db['shows']
-
-    new_show = {}
-    new_show['name'] = show_name
-    shows_collection.save(new_show)
