@@ -39,7 +39,8 @@ def create_show(long_name, code_name):
         {
             "name": code_name,
             "long_name": long_name,
-            "sequences": []
+            "sequences": [],
+            "active": True
         }
     )
 
@@ -127,5 +128,14 @@ def update_shot_target_date(shot_name, target_date):
         {"name": shot_name},
         {"$push":
          {"target_date": target_date}
+         }
+    )
+
+
+def set_active_show(show_name, true_or_false):
+    db.shows.update(
+        {"name": show_name},
+        {"$set":
+         {"active": true_or_false}
          }
     )
