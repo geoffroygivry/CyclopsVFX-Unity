@@ -73,7 +73,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['Path'] = path
     Submission['comment'] = comments
     Submission['thumbnail'] = thumb
-    Submission['thumbnail_s3'] = "https://s3.amazonaws.com/cyclopsvfx/" + thumb
+    Submission['thumbnail_s3'] = "https://s3.amazonaws.com/cyclopsvfx/" + os.path.basename(thumb)
     dailiesCollections.save(Submission)
     send_to_S3(thumb)
 

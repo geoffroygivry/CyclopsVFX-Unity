@@ -45,7 +45,7 @@ def justThumPath():
 
   node = nuke.toNode("Write1")
   fileName = node['file'].value()
-  NewFileName = fileName.rsplit('/', 1)[0] + '/' + node['file'].value().split('/')[-1]
+  NewFileName = fileName.rsplit('/', 1)[0] + '/.' + node['file'].value().split('/')[-1]
   FirstFrameNewFileName = NewFileName.replace("%04d", "thumbnail")
   ext = FirstFrameNewFileName.split('.')[-1]
   FirstFrameNewFileName = FirstFrameNewFileName.replace(ext, "jpg")

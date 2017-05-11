@@ -16,6 +16,7 @@
         "CYC_STEROPES_PATH": "/Dropbox/CyclopsVFX/Apps/Steropes",
         "DI_ROOT": "/Dropbox",
         "NUKE_PATH": "/Dropbox/CyclopsVFX/Core/config/NukeEnv",
+        "NUKE": "C: /Program Files/Nuke9.0v7/Nuke9.0.exe -- nukex",
         "SHOW_PATH": "/Dropbox/jobs"
     }
 }

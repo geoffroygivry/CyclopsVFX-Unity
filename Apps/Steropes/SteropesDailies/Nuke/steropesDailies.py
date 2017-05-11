@@ -65,15 +65,12 @@ class nukeSteropesDailiesCore(DailiesPanel):
 
         NukeSelNode = nuke.selectedNode()
         path = NukeSelNode['file'].value().rsplit('/', 1)[0]
-        newPath = []
+        # newPath = []
         thumbList = []
         for I in os.listdir(path):
-            if I[0] != '.':
-                newPath.append(I)
-            else:
-                if I.split('.')[2] == 'thumbnail':
-                    thumbList.append(I)
-        thumbnailPic = os.path.join(path, thumbList[0])
+            if "thumbnail" in I:
+                thumbList.append(I)
+        # thumbnailPic = os.path.join(path, thumbList[0])
         # self.subItemPic.setPixmap(QPixmap(thumbnailPic))
         self.subItemPic.setPixmap(QPixmap(self.thumbMeta))
 
