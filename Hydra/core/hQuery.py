@@ -43,23 +43,14 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     from Hydra.core import hQuery
     hQuery.sendToDailies('Comp', 'this/is/the/path', 'this is the comment', 'this/is/the/bkp_script', 'frame-range')
     """
-    # make connection with MongoDb
-    # server = Connection()
-
-    # format = "%a %d %b %Y at %H:%M:%S "
-    # now = datetime.datetime.now()
-    format = "%a %d %b %Y at %H:%M:%S "
-    today = datetime.datetime.today()
-    now = today.strftime(format)
-
-    # this is the name of the Data base
+    now = datetime.datetime.utcnow().isoformat()
     db = server['hydra']
-
     dailiesCollections = db['dailies_submissions']
 
     # creation of the dailies submission entry
     Submission = dict()
     Submission['Date'] = now
+    Submission['timestamp'] = datetime.datetime.utcnow()
     Submission['Show'] = show
     Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task

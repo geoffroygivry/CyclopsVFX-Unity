@@ -99,11 +99,10 @@ def create_shot(show_name, seq_name, shot_name, frame_in=1001, frame_out=1001,
 
 def add_task(shot_name, task_type, assignee):
     """ This function is used only for adding tasks to shots."""
-    user_id = db.users.find_one({"name": assignee}).get("_id")
     db.shots.update(
         {"name": shot_name},
         {"$push":
-         {"tasks": {task_type: user_id}}
+         {"tasks": {task_type: assignee}}
          }
     )
 
