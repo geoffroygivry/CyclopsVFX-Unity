@@ -1,6 +1,6 @@
 # README #
 
-## Welcome to Cyclops VFX Pipeline! ##
+## Welcome to CyclopsVFX Unity! ##
 
 **CyclopsVFX**, is an Open Source Production Tracking Software, for your **VFX, Video Game and Animation pipeline**. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
 
