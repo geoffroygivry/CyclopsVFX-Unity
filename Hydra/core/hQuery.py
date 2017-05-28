@@ -28,6 +28,8 @@ import boto3
 from boto3.s3.transfer import S3Transfer
 
 from Core.config import cyc_config as cfg
+import notifications
+import db_queries as dbq
 
 server = MongoClient(cfg.MONGODB)
 
@@ -67,6 +69,8 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['thumbnail_s3'] = "https://s3.amazonaws.com/cyclopsvfx/" + os.path.basename(thumb)
     dailiesCollections.save(Submission)
     send_to_S3(thumb)
+    users_list = dbq.get_users_from_shot(shot)
+    notifications.push_notifications("New Dailies Submission for %s" % shot, users_list, now)
 
 
 def PublishIt(name, path, comments, task=os.getenv('TASK')):
@@ -97,3 +101,4 @@ def PublishIt(name, path, comments, task=os.getenv('TASK')):
     publishDict['Path'] = path
     publishDict['comment'] = comments
     PubCollections.save(publishDict)
+    notifications.push_notifications("New Item has been published : %s" % name, "CG-%s" % name)

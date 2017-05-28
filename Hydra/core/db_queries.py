@@ -76,8 +76,22 @@ def get_seqs(show_name):
 
 def get_shots(show_name, seq_name):
     shots_list = []
-    show_id = db.shows.find_one({"name": show_name}).get("_id")
-    seq_id = db.seqs.find_one({"name": seq_name}).get("_id")
-    for n in db.shots.find({"show": show_id, "seq": seq_id}):
-        shots_list.append(n)
-    return shots_list
+    try:
+        show_id = db.shows.find_one({"name": show_name}).get("_id")
+        seq_id = db.seqs.find_one({"name": seq_name}).get("_id")
+        for n in db.shots.find({"show": show_id, "seq": seq_id}):
+            shots_list.append(n)
+        return shots_list
+    except AttributeError:
+        print "Please type a valid name for the show or the sequence"
+        pass
+
+
+def get_users_from_shot(shot_name):
+    users_list = []
+    shot = db.shots.find_one({"name": shot_name})
+    tasks = shot.get('tasks')
+    for task_dict in tasks:
+        for task, user in task_dict.iteritems():
+            users_list.append(user)
+    return users_list
