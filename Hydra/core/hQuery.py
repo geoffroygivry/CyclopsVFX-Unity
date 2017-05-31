@@ -70,7 +70,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     dailiesCollections.save(Submission)
     send_to_S3(thumb)
     users_list = dbq.get_users_from_shot(shot)
-    notifications.push_notifications("New Dailies Submission for %s" % shot, users_list, now)
+    notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "dailies", shot, now)
 
 
 def PublishIt(name, path, comments, task=os.getenv('TASK')):
