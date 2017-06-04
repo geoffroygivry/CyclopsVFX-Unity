@@ -97,14 +97,17 @@ def create_shot(show_name, seq_name, shot_name, frame_in=1001, frame_out=1001,
     )
 
 
-def add_task(shot_name, task_type, assignee):
+def add_task(shot_name, task_type, assignee, status="NOT_STARTED"):
     """ This function is used only for adding tasks to shots."""
-    db.shots.update(
-        {"name": shot_name},
-        {"$push":
-         {"tasks": {task_type: assignee}}
-         }
-    )
+    valid_statuses = ["NOT_STARTED", "IN_PROGRESS", "COMPLETED"]
+    for n in valid_statuses:
+        if status in n:
+            db.shots.update(
+                {"name": shot_name},
+                {"$push":
+                 {"tasks": {"task": task_type, "assignee": assignee, "status": status}}
+                 }
+            )
 
 
 def update_shot_status(shot_name, status):

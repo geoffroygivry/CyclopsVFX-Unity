@@ -88,10 +88,7 @@ def get_shots(show_name, seq_name):
 
 
 def get_users_from_shot(shot_name):
-    users_list = []
     shot = db.shots.find_one({"name": shot_name})
     tasks = shot.get('tasks')
-    for task_dict in tasks:
-        for task, user in task_dict.iteritems():
-            users_list.append(user)
-    return users_list
+    users = [x['assignee'] for x in tasks]
+    return users
