@@ -28,7 +28,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 
 from Apps.Steropes.StyleSheet import MainStyleSheet
-from Hydra.core import hQuery
+from Hydra.core import submissions
 
 
 icon = os.path.join(os.getenv('CYC_ICON'), 'Cyclops.ico')
@@ -194,7 +194,7 @@ class PublishPanel(QWidget):
         part2LayoutTree.addWidget(self.commentsTextEdit)
         treeLayout.addLayout(part2LayoutTree)
 
-        
+
         mainVertLayout.addLayout(HeaderLayout)
         mainVertLayout.addLayout(treeLayout)
 
@@ -217,7 +217,7 @@ class PublishPanel(QWidget):
             pubPath = self.infoWidget[str(item)]['fullPath']
             pubName = self.infoWidget[str(item)]['name']
             commentField = unicode(self.commentsTextEdit.toPlainText())
-            hQuery.PublishIt(pubName, pubPath, commentField)
+            submissions.PublishIt(pubName, pubPath, commentField)
         self.close()
 
 

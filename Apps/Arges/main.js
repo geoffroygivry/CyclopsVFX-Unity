@@ -15,7 +15,7 @@ var url2 = creds.MONGODB();
 
 MongoClient.connect(url2, function(err, db) {
 
-    var cursor = db.collection('dailies_submissions').find();
+    var cursor = db.collection('submissions').find();
 
     cursor.each(function(err, doc) {
 

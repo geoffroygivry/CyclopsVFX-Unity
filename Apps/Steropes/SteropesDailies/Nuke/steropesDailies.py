@@ -29,7 +29,7 @@ import sys
 from PyQt4.QtGui import *
 import datetime
 from PyQt4.QtCore import *
-from Hydra.core import hQuery
+from Hydra.core import submissions
 from Apps.Steropes.SteropesDailies.ui.DailiesUi import DailiesPanel
 import shutil
 
@@ -121,7 +121,7 @@ class nukeSteropesDailiesCore(DailiesPanel):
         bckScript = unicode(NukeSelNode.metadata()['exr/nuke/NukeScript'])
         frameFirst = unicode(self.frameIn.text())
         frameLast = unicode(self.frameOut.text())
-        hQuery.sendToDailies(pathToFile, commentField, bckScript, frameFirst, frameLast, self.thumbMeta)
+        submissions.sendToDailies(pathToFile, commentField, bckScript, frameFirst, frameLast, self.thumbMeta)
         self.close()
 
 

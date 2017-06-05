@@ -128,7 +128,7 @@ def update_shot_target_date(shot_name, target_date):
     """ Update the target date of the shot"""
     db.shots.update(
         {"name": shot_name},
-        {"$push":
+        {"$set":
          {"target_date": target_date}
          }
     )
@@ -139,5 +139,14 @@ def set_active_show(show_name, true_or_false):
         {"name": show_name},
         {"$set":
          {"active": true_or_false}
+         }
+    )
+
+
+def link_asset_to_shot(asset_name, shot_name):
+    db.shots.update(
+        {"name": shot_name},
+        {"$push":
+         {"assets": asset_name}
          }
     )
