@@ -21,8 +21,6 @@
 # SOFTWARE.
 
 import os
-# from pymongo import Connection
-from pymongo import MongoClient
 import datetime
 import boto3
 from boto3.s3.transfer import S3Transfer
@@ -51,7 +49,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     """ function to create a new dailies submission
     example :
     from Hydra.core import submissions
-    submissions.sendToDailies('Comp', 'this/is/the/path', 'this is the comment', 'this/is/the/bkp_script', 'frame-range')
+    submissions.sendToDailies('this/is/the/path', 'this is the comment', 'this/is/the/bkp_script', 'frame-range')
     """
     # db = server['hydra']
 
@@ -81,7 +79,6 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     send_to_S3(thumb)
     users_list = dbq.get_users_from_shot(shot)
     notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "dailies", shot, now)
-    db.close()
 
 
 def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROGRESS"):
@@ -91,13 +88,6 @@ def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROG
     submissions.PublishIt('MainWall', 'this/is/the/path', 'this is the comment')
     """
 
-    # format = "%a %d %b %Y at %H:%M:%S "
-    # now = datetime.datetime.now()
-    format = "%a %d %b %Y at %H:%M:%S "
-    today = datetime.datetime.today()
-
-    # this is the name of the Database
-    # db = server['hydra']
     db = get_connection()
 
     PubCollections = db['submissions']
@@ -113,11 +103,9 @@ def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROG
     publishDict['Path'] = path
     publishDict['comment'] = comments
     PubCollections.save(publishDict)
-    notifications.push_notifications("New Item has been published : %s" % name, "CG-%s" % name)
-    db.close()
+    notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "publish", shot, now)
 
-
-def submit_note(show=None, seq=None, shot=None, note):
+def submit_note(note, show=None, seq=None, shot=None):
     """ Description:
         Function that is used to create a note form the user at show or seq or shot level.
         Note that you can not use more than one parameters for show/seq/shot.
@@ -160,4 +148,3 @@ def submit_note(show=None, seq=None, shot=None, note):
                 "date": now
              }
         )
-    db.close()

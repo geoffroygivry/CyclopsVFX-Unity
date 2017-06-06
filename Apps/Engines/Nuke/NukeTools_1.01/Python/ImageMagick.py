@@ -27,7 +27,7 @@ import os
 def makeThumbnail():
 
   frameFirst = str('%0*d' % (4, int(nuke.Root()['first_frame'].value())))
-  for node in nuke.selectedNodes('Write'):
+  for node in nuke.allNodes('Write'):
     fileName = node['file'].value()
     FirstFramefileName = fileName.replace("%04d", frameFirst)
     NewFileName = fileName.rsplit('/', 1)[0] + '/.' + node['file'].value().split('/')[-1]
