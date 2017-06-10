@@ -40,8 +40,13 @@ def update_ptuid(show_name):
     db.shows.update({"name": show_name}, {'$inc': {"ptuid": 1}})
 
 
-def ptuid(show_name, task):
+def update_latest_ptuid(shot_name, latest_ptuid):
+    db.shots.update({"name": shot_name}, {'$set': {"latest_ptuid": latest_ptuid}})
+
+
+def ptuid(show_name, shot_name, task):
     get_current_ptuid(show_name)
     final_ptuid = generate_ptuid(show_name, task)
     update_ptuid(show_name)
+    update_latest_ptuid(shot_name, final_ptuid)
     return final_ptuid

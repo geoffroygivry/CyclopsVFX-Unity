@@ -26,6 +26,7 @@ import boto3
 from boto3.s3.transfer import S3Transfer
 
 from Core.config import cyc_config as cfg
+from Core import ptuid
 import notifications
 import db_queries as dbq
 import connect_db as con
@@ -55,6 +56,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
 
     db = get_connection()
     dailiesCollections = db['submissions']
+    new_ptuid = ptuid.ptuid(show, shot, task)
     # creation of the dailies submission entry
     Submission = dict()
     Submission['Date'] = now
@@ -64,6 +66,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['Show'] = show
     Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task
+    Submission['ptuid'] = new_ptuid
     if Submission['Task'] == 'CreText' or Submission['Task'] == 'CreMod' or Submission['Task'] == 'EnvText' or Submission['Task'] == 'EnvMod' or Submission['Task'] == 'EnvShader' or Submission['Task'] == 'CreShader' or Submission['Task'] == 'CreRig' or Submission['Task'] == 'PropMod' or Submission['Task'] == 'PropText' or Submission['Task'] == 'PropShader' or Submission['Task'] == 'PropRig':
         Submission['AssetName'] = 'MainWall'
     else:
@@ -104,6 +107,7 @@ def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROG
     publishDict['comment'] = comments
     PubCollections.save(publishDict)
     notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "publish", shot, now)
+
 
 def submit_note(note, show=None, seq=None, shot=None):
     """ Description:

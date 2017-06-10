@@ -26,6 +26,11 @@ import re
 import pyseq
 import datetime
 
+from Core.config import cyc_config as cfg
+
+import boto3
+import botocore
+
 root = os.getenv('CYC_ROOT')
 
 
@@ -105,3 +110,21 @@ def convert_isotime_to_datetime(isotime_format):
     dt = datetime.datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S")
     us = int(us.rstrip("Z"), 10)
     return dt + datetime.timedelta(microseconds=us)
+
+
+def check_s3(basename):
+
+    s3 = boto3.resource('s3')
+    exists = False
+
+    try:
+        s3.Object(cfg.BUCKET_NAME, basename).load()
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            exists = False
+        else:
+            raise
+    else:
+        exists = True
+
+    return exists
