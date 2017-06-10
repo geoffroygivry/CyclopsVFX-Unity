@@ -39,7 +39,7 @@ def push_notifications(publisher, suscribers, type_, shotname, isodate):
 
         Example of usage:
         import notifications
-        notifications.push_notifications({"name": "Geoffroy", "email": "geoff@example.com"}, ['user1', 'user2', 'user3'], "dailies", "MANOR_010", "2017-06-27T14:44:02.191Z")
+        notifications.push_notifications({"name": "Geoff", "email": "geoff@example.com"}, ['user1', 'user2', 'user3'], "dailies", "MANOR_010", "2017-06-27T14:44:02.191Z")
     """
     datetime_now = cyc.convert_isotime_to_datetime(isodate)
     month_later = datetime_now + datetime.timedelta(+30)

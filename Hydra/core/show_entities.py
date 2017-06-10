@@ -40,7 +40,8 @@ def create_show(long_name, code_name):
             "name": code_name,
             "long_name": long_name,
             "sequences": [],
-            "active": True
+            "active": True,
+            "ptuid": 1
         }
     )
 
@@ -51,11 +52,10 @@ def create_seq(show_name, seq_name):
     Example of usage:
         create_seq("RBY", "MANOR")
     """
-    show_id = db.shows.find_one({"name": show_name}).get("_id")
     db.seqs.insert(
         {
             "name": seq_name,
-            "show": show_id
+            "show": show_name
         }
     )
     db.shows.update(
@@ -74,13 +74,11 @@ def create_shot(show_name, seq_name, shot_name, frame_in=1001, frame_out=1001,
     Example of usage:
         create_shot("RBY", "MANOR", "MANOR_010", frame_in=1001, frame_out=1067)
     """
-    show_id = db.shows.find_one({"name": show_name}).get("_id")
-    seq_id = db.seqs.find_one({"name": seq_name}).get("_id")
     db.shots.insert(
         {
             "name": shot_name,
-            "show": show_id,
-            "seq": seq_id,
+            "show": show_name,
+            "seq": seq_name,
             "frame_in": frame_in,
             "frame_out": frame_out,
             "tasks": tasks,
