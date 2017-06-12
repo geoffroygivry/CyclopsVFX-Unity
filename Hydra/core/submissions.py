@@ -46,7 +46,7 @@ def send_to_S3(img):
     transfer.upload_file(img, cfg.BUCKET_NAME, os.path.basename(img), extra_args={'ACL': 'public-read'})
 
 
-def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show=os.getenv('JOB'), shot=os.getenv('SHOT'), task=os.getenv('TASK'), status="WORK IN PROGRESS"):
+def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show=os.getenv('JOB'), shot=os.getenv('SHOT'), seq=os.getenv('SEQ'), task=os.getenv('TASK'), status="WORK IN PROGRESS"):
     """ function to create a new dailies submission
     example :
     from Hydra.core import submissions
@@ -64,6 +64,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['status'] = status
     Submission['timestamp'] = datetime.datetime.utcnow()
     Submission['Show'] = show
+    Submission['seq'] = seq
     Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task
     Submission['ptuid'] = new_ptuid

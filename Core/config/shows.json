@@ -1,8 +1,13 @@
 {
     "active_shows": {
-        "RUBISHBOY" : {
-            "shots": ["MANOR_001"],
-            "seqs": ["MANOR"]
+        "RBY" : {
+            "MANOR": ["MANOR_010",
+                    "MANOR_020",
+                    "MANOR_030"],
+            "HRM": [
+                "HRM_010",
+                "HRM_020"
+            ]
         }
     }
 }
