@@ -41,84 +41,69 @@ timeStamp = today.strftime(format)
 artistName = os.getenv('USERNAME')
 
 
-taskforDb = "Comp"
-
-
 class nukeSteropesDailiesCore(DailiesPanel):
     '''The Nuke dailies submission panel'''
 
     def __init__(self):
         super(nukeSteropesDailiesCore, self).__init__()
 
-        NukeSelNode = nuke.selectedNode()
-        self.thumbMeta = unicode(NukeSelNode.metadata()['exr/nuke/Thumbnail'])
+        self.NukeSelNode = nuke.selectedNode()
+        self.path = os.path.dirname(self.NukeSelNode)
+        self.thumbMeta = unicode(self.NukeSelNode.metadata()['exr/nuke/Thumbnail'])
 
-        self.setThum()
+        self.subItemPic.setPixmap(QPixmap(self.thumbMeta))
         self.setItemInfo()
         self.setMinFrame()
         self.setMaxFrame()
 
         self.close_push_button.clicked.connect(self.close)
         self.save_push_button.clicked.connect(self.goDb)
-
-    def setThum(self):
-
-        NukeSelNode = nuke.selectedNode()
-        path = NukeSelNode['file'].value().rsplit('/', 1)[0]
-        # newPath = []
-        thumbList = []
-        for I in os.listdir(path):
-            if "thumbnail" in I:
-                thumbList.append(I)
-        # thumbnailPic = os.path.join(path, thumbList[0])
-        # self.subItemPic.setPixmap(QPixmap(thumbnailPic))
-        self.subItemPic.setPixmap(QPixmap(self.thumbMeta))
+      
 
     def setItemInfo(self):
 
-        NukeSelNode = nuke.selectedNode()
-        pathToFile = NukeSelNode['file'].value()
+        pathToFile = self.NukeSelNode['file'].value()
         pathToFile = pathToFile.replace('%04d', '####')
         finalTextItemInfo = '%s\nBy %s\n%s' % (pathToFile, artistName, timeStamp)
         self.subItemInfo.setText(finalTextItemInfo)
 
+        
     def setMinFrame(self):
 
-        NukeSelNode = nuke.selectedNode()
-        path = NukeSelNode['file'].value().rsplit('/', 1)[0]
-        newPath = []
-        thumbList = []
-        for I in os.listdir(path):
-            if I[0] != '.':
-                newPath.append(I)
-            else:
-                if I.split('.')[2] == 'thumbnail':
-                    thumbList.append(I)
-        minNum = min([r.split('.')[1] for r in newPath])
-        self.frameIn.setText(minNum)
+#         newPath = []
+#         thumbList = []
+#         for I in os.listdir(self.path):
+#             if I[0] != '.':
+#                 newPath.append(I)
+#             else:
+#                 if I.split('.')[2] == 'thumbnail':
+#                     thumbList.append(I)
+#         minNum = min([r.split('.')[1] for r in newPath])
+        min_frame = min([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
+        self.frameIn.setText(min_frame)
 
+        
     def setMaxFrame(self):
 
-        NukeSelNode = nuke.selectedNode()
-        path = NukeSelNode['file'].value().rsplit('/', 1)[0]
-        newPath = []
-        thumbList = []
-        for I in os.listdir(path):
-            if I[0] != '.':
-                newPath.append(I)
-            else:
-                if I.split('.')[2] == 'thumbnail':
-                    thumbList.append(I)
-        maxNum = max([r.split('.')[1] for r in newPath])
-        self.frameOut.setText(maxNum)
+#         newPath = []
+#         thumbList = []
+#         for I in os.listdir(self.path):
+#             if I[0] != '.':
+#                 newPath.append(I)
+#             else:
+#                 if I.split('.')[2] == 'thumbnail':
+#                     thumbList.append(I)
+#         maxNum = max([r.split('.')[1] for r in newPath])
+        max_frame = min([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
+        self.frameOut.setText(max_frame)
 
+        
     def goDb(self):
 
-        NukeSelNode = nuke.selectedNode()
-        pathToFile = unicode(NukeSelNode['file'].value())
+        pathToFile = unicode(self.NukeSelNode['file'].value())
         pathToFile = unicode(pathToFile.replace('%04d', '####'))
         commentField = unicode(self.forComments.toPlainText())
-        bckScript = unicode(NukeSelNode.metadata()['exr/nuke/NukeScript'])
+        bckScript = unicode(self.NukeSelNode.metadata()['exr/nuke/NukeScript'])
         frameFirst = unicode(self.frameIn.text())
         frameLast = unicode(self.frameOut.text())
         submissions.sendToDailies(pathToFile, commentField, bckScript, frameFirst, frameLast, self.thumbMeta)
@@ -136,5 +121,4 @@ def start():
 
 # calling in nuke :
 # from Apps.Steropes.Nuke import steropesDailies
-
 # steropesDailies.start()
