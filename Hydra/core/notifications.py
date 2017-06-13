@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 from connect_db import server
-from Core.utils import cycGoodies as cyc
+from Core.utils import cyc_utils as cyc
 from bson.objectid import ObjectId
 import datetime
 

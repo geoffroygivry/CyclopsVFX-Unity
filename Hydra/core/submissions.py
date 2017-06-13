@@ -26,12 +26,12 @@ import boto3
 from boto3.s3.transfer import S3Transfer
 
 from Core.config import cyc_config as cfg
+from Core.utils import cyc_utils as utils
 from Core import ptuid
 import notifications
 import db_queries as dbq
 import connect_db as con
 
-# server = MongoClient(cfg.MONGODB)
 now = datetime.datetime.utcnow().isoformat()
 
 
@@ -46,13 +46,12 @@ def send_to_S3(img):
     transfer.upload_file(img, cfg.BUCKET_NAME, os.path.basename(img), extra_args={'ACL': 'public-read'})
 
 
-def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show=os.getenv('JOB'), shot=os.getenv('SHOT'), seq=os.getenv('SEQ'), task=os.getenv('TASK'), status="WORK IN PROGRESS"):
+def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show=os.getenv('JOB'), shot=os.getenv('SHOT'), asset=os.getenv('ASSET'), seq=os.getenv('SEQ'), task=os.getenv('TASK'), status="WORK IN PROGRESS"):
     """ function to create a new dailies submission
     example :
     from Hydra.core import submissions
     submissions.sendToDailies('this/is/the/path', 'this is the comment', 'this/is/the/bkp_script', 'frame-range')
     """
-    # db = server['hydra']
 
     db = get_connection()
     dailiesCollections = db['submissions']
@@ -68,12 +67,18 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task
     Submission['ptuid'] = new_ptuid
-    if Submission['Task'] == 'CreText' or Submission['Task'] == 'CreMod' or Submission['Task'] == 'EnvText' or Submission['Task'] == 'EnvMod' or Submission['Task'] == 'EnvShader' or Submission['Task'] == 'CreShader' or Submission['Task'] == 'CreRig' or Submission['Task'] == 'PropMod' or Submission['Task'] == 'PropText' or Submission['Task'] == 'PropShader' or Submission['Task'] == 'PropRig':
-        Submission['AssetName'] = 'MainWall'
-    else:
-        Submission['Shot'] = shot
-        Submission['first_frame'] = firstFrame
-        Submission['last_frame'] = lastFrame
+    
+    entity = utils.check_entity(task)
+    if entity is not None:
+        if entity == 'shot':
+            Submission[entity] = shot
+            Submission['first_frame'] = firstFrame
+            Submission['last_frame'] = lastFrame
+        elif entity == 'asset':
+            Submission[entity] = asset
+        else:
+            Submission['entity'] = None
+    
     Submission['bkp_script'] = bkp_script
     Submission['Path'] = path
     Submission['comment'] = comments
@@ -98,13 +103,13 @@ def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROG
 
     # creation of the dailies submission entry
     publishDict = dict()
-    publishDict['Date'] = now
+    publishDict['date'] = now
     publishDict['type'] = "publish"
-    publishDict['Username'] = os.getenv('USERNAME')
-    publishDict['Task'] = task
+    publishDict['user_name'] = os.getenv('USERNAME')
+    publishDict['task'] = task
     publishDict['status'] = status
-    publishDict['AssetName'] = name
-    publishDict['Path'] = path
+    publishDict['asset'] = name
+    publishDict['path'] = path
     publishDict['comment'] = comments
     PubCollections.save(publishDict)
     notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "publish", shot, now)

@@ -1,0 +1,28 @@
+{
+    "asset_tasks" : [
+        "CPA",
+        "RIG",
+        "TXT",
+        "MOD",
+        "CRE",
+        "SHD",
+        "CAM",
+        "LYT"
+    ],
+    "shot_tasks" : [
+        "DMP",
+        "ANM",
+        "LGT",
+        "CMP",
+        "SFX",
+        "RTO",
+        "PNT"
+    ],
+    "roles" : [
+        "prod",
+        "sup",
+        "admin",
+        "dev",
+        "artist"
+    ]
+}

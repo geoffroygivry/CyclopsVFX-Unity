@@ -15,10 +15,6 @@ print grettings
 json_file = "/Dropbox/CyclopsVFX/CYC_envs.json"
 os.chdir("/Dropbox/CyclopsVFX/")
 
-# import show_env
-
-# show_envs = show_env.run()
-
 new_dict = {}
 
 with open(json_file) as j:
