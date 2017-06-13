@@ -58,42 +58,20 @@ class nukeSteropesDailiesCore(DailiesPanel):
         self.save_push_button.clicked.connect(self.goDb)
 
     def setItemInfo(self):
-
         pathToFile = self.NukeSelNode['file'].value()
         pathToFile = pathToFile.replace('%04d', '####')
         finalTextItemInfo = '%s\nBy %s\n%s' % (pathToFile, artistName, timeStamp)
         self.subItemInfo.setText(finalTextItemInfo)
 
     def setMinFrame(self):
-
-        #         newPath = []
-        #         thumbList = []
-        #         for I in os.listdir(self.path):
-        #             if I[0] != '.':
-        #                 newPath.append(I)
-        #             else:
-        #                 if I.split('.')[2] == 'thumbnail':
-        #                     thumbList.append(I)
-        #         minNum = min([r.split('.')[1] for r in newPath])
         min_frame = min([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
         self.frameIn.setText(min_frame)
 
     def setMaxFrame(self):
-
-        #         newPath = []
-        #         thumbList = []
-        #         for I in os.listdir(self.path):
-        #             if I[0] != '.':
-        #                 newPath.append(I)
-        #             else:
-        #                 if I.split('.')[2] == 'thumbnail':
-        #                     thumbList.append(I)
-        #         maxNum = max([r.split('.')[1] for r in newPath])
         max_frame = max([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
         self.frameOut.setText(max_frame)
 
     def goDb(self):
-
         pathToFile = unicode(self.NukeSelNode['file'].value())
         pathToFile = unicode(pathToFile.replace('%04d', '####'))
         commentField = unicode(self.forComments.toPlainText())
