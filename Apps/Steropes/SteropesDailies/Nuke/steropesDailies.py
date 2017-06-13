@@ -25,13 +25,11 @@
 
 import nuke
 import os
-import sys
 from PyQt4.QtGui import *
 import datetime
 from PyQt4.QtCore import *
 from Hydra.core import submissions
 from Apps.Steropes.SteropesDailies.ui.DailiesUi import DailiesPanel
-import shutil
 
 
 format = "%a %d %b %Y at %H:%M:%S "
@@ -48,7 +46,7 @@ class nukeSteropesDailiesCore(DailiesPanel):
         super(nukeSteropesDailiesCore, self).__init__()
 
         self.NukeSelNode = nuke.selectedNode()
-        self.path = os.path.dirname(self.NukeSelNode)
+        self.path = os.path.dirname(self.NukeSelNode['file'].value())
         self.thumbMeta = unicode(self.NukeSelNode.metadata()['exr/nuke/Thumbnail'])
 
         self.subItemPic.setPixmap(QPixmap(self.thumbMeta))
@@ -58,7 +56,6 @@ class nukeSteropesDailiesCore(DailiesPanel):
 
         self.close_push_button.clicked.connect(self.close)
         self.save_push_button.clicked.connect(self.goDb)
-      
 
     def setItemInfo(self):
 
@@ -67,37 +64,34 @@ class nukeSteropesDailiesCore(DailiesPanel):
         finalTextItemInfo = '%s\nBy %s\n%s' % (pathToFile, artistName, timeStamp)
         self.subItemInfo.setText(finalTextItemInfo)
 
-        
     def setMinFrame(self):
 
-#         newPath = []
-#         thumbList = []
-#         for I in os.listdir(self.path):
-#             if I[0] != '.':
-#                 newPath.append(I)
-#             else:
-#                 if I.split('.')[2] == 'thumbnail':
-#                     thumbList.append(I)
-#         minNum = min([r.split('.')[1] for r in newPath])
+        #         newPath = []
+        #         thumbList = []
+        #         for I in os.listdir(self.path):
+        #             if I[0] != '.':
+        #                 newPath.append(I)
+        #             else:
+        #                 if I.split('.')[2] == 'thumbnail':
+        #                     thumbList.append(I)
+        #         minNum = min([r.split('.')[1] for r in newPath])
         min_frame = min([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
         self.frameIn.setText(min_frame)
 
-        
     def setMaxFrame(self):
 
-#         newPath = []
-#         thumbList = []
-#         for I in os.listdir(self.path):
-#             if I[0] != '.':
-#                 newPath.append(I)
-#             else:
-#                 if I.split('.')[2] == 'thumbnail':
-#                     thumbList.append(I)
-#         maxNum = max([r.split('.')[1] for r in newPath])
-        max_frame = min([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
+        #         newPath = []
+        #         thumbList = []
+        #         for I in os.listdir(self.path):
+        #             if I[0] != '.':
+        #                 newPath.append(I)
+        #             else:
+        #                 if I.split('.')[2] == 'thumbnail':
+        #                     thumbList.append(I)
+        #         maxNum = max([r.split('.')[1] for r in newPath])
+        max_frame = max([x.split('.')[-2] for x in os.listdir(self.path) if x.split('.')[-1] == "exr"])
         self.frameOut.setText(max_frame)
 
-        
     def goDb(self):
 
         pathToFile = unicode(self.NukeSelNode['file'].value())
