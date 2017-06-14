@@ -7,6 +7,7 @@ def create_json_CYC_envs(root_dir):
     CYC_ROOT = "%s/CyclopsVFX" % DI_ROOT
     DATA_FILENAME = os.path.join(CYC_ROOT, "CYC_envs.json")
     CYC_HYDRA_PATH = "%s/Hydra" % (CYC_ROOT)
+    CYC_HYDRA_CACHE = "%s/Hydra/cache" % (CYC_ROOT)
     CYC_CORE_PATH = "%s/Core/config/" % (CYC_ROOT)
     CYC_NUKE_ENV = "%s/Core/config/NukeEnv" % (CYC_ROOT)
     CYC_MAYA_ENV = "%s/Core/config/MayaEnv" % (CYC_ROOT)
@@ -28,6 +29,7 @@ def create_json_CYC_envs(root_dir):
                 "DI_ROOT": DI_ROOT,
                 "CYC_ROOT": CYC_ROOT,
                 "CYC_HYDRA_PATH": CYC_HYDRA_PATH,
+                "CYC_HYDRA_CACHE": CYC_HYDRA_CACHE,
                 "CYC_CORE_PATH": CYC_CORE_PATH,
                 "CYC_NUKE_ENV": CYC_NUKE_ENV,
                 "CYC_MAYA_ENV": CYC_MAYA_ENV,

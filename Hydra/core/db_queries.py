@@ -92,3 +92,9 @@ def get_users_from_shot(shot_name):
     tasks = shot.get('tasks')
     users = [x['assignee'] for x in tasks]
     return users
+
+
+def get_frame_range_from_shot(shot_name):
+    shot = db.shots.find_one({"name": shot_name})
+    frame_range = {"first": shot.get('frame_in'), "last": shot.get('frame_out')}
+    return frame_range

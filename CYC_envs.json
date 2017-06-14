@@ -5,6 +5,7 @@
         "CYC_CORE_PATH": "/Dropbox/CyclopsVFX/Core/config/",
         "CYC_ENGINE_NUKE": "/Dropbox/CyclopsVFX/Apps/Engines/Nuke",
         "CYC_HYDRA_PATH": "/Dropbox/CyclopsVFX/Hydra",
+        "CYC_HYDRA_CACHE": "/Dropbox/CyclopsVFX/Hydra/cache",
         "CYC_ICON": "/Dropbox/CyclopsVFX/icons",
         "CYC_MARI_ENV": "/Dropbox/CyclopsVFX/Core/config/MariEnv",
         "CYC_MAYA_ENV": "/Dropbox/CyclopsVFX/Core/config/MayaEnv",

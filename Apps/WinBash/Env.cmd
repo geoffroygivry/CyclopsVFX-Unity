@@ -25,17 +25,17 @@ set SHOW_PATH=%DI_ROOT%/jobs
 
 :: creation of "Aliases"
 ::doskey nuke="C:\Program Files\Nuke9.0v7\Nuke9.0.exe" --nukex $*
-doskey nuke=python %CYC_SHOW_ENV%/show.py $*
+doskey nuke=Nuke9.0
 doskey show=set JOB=$*
 set SHOW=%JOB%
 doskey shot=set SHOT=$*
 doskey task=set TASK=$*
+doskey seq=set SEQ=$*
 doskey maya="C:\Program Files\Autodesk\Maya2015\bin\maya.exe" $*
 doskey clarisse="C:\Users\Geoffroy\Documents\clarisse\clarisse.bat" $*
 
 
 cls
-type welcome.txt
 cd C:\
 
 

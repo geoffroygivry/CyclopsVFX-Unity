@@ -25,6 +25,7 @@
 
 import nuke
 import os
+import json
 import autobackdrop
 import stores
 import NukeCollect
@@ -44,19 +45,20 @@ import missingFrames
 import RandomSelection
 import updateFrameRange
 import saveTheScript
+import load_frame_range
 from Apps.Steropes.SteropesDailies.Nuke import steropesDailies
 from Apps.Steropes.SteropesPublish.ui import PublishUi
 
 
-#from python_thb_dev import templateNode
-
 # import geoffroy_callbacks
 # geoffroy_callbacks.register_callbacks()
 
+# nuke.Root() callback
+nuke.addOnUserCreate(load_frame_range.in_nuke)
+
+
 ToDoList.registerNukePanel()
-
 nuke.addAfterRender(ImageMagick.makeThumbnail)
-
 stores.addStoresMenu()
 
 os.environ['GENEPATH'] = '/usr/home/ggivry/Geoff/NUKE/'
@@ -120,8 +122,7 @@ def snapItFlare():
         k.setValueAt(0, tMinus)
         k.setValueAt(1, t)
         k.setValueAt(0, tPlus)
-    except:
-        AttributeError
+    except AttributeError:
         pass
 
 
@@ -136,8 +137,7 @@ def snapIt():
         k.setValueAt(0, tMinus)
         k.setValueAt(1, t)
         k.setValueAt(0, tPlus)
-    except:
-        AttributeError
+    except AttributeError:
         pass
 
 
@@ -150,8 +150,7 @@ def snapZeroToOne():
         k.setAnimated()
         k.setValueAt(0, t)
         k.setValueAt(1, tPlus)
-    except:
-        AttributeError
+    except AttributeError:
         pass
 
 
@@ -164,8 +163,7 @@ def snapOneToZero():
         k.setAnimated()
         k.setValueAt(1, t)
         k.setValueAt(0, tPlus)
-    except:
-        AttributeError
+    except AttributeError:
         pass
 
 
@@ -213,7 +211,7 @@ except KeyError:
     menu2 = nuke.menu('Nuke').addMenu('No Env Mode').setEnabled(False)
 
 
-Geoff = nuke.menu('Nuke').addMenu('Cyclops')
+Geoff = nuke.menu('Nuke').addMenu('CyclopsVFX')
 # Geoff.addCommand('Auto Name Script', 'autoNameScript_RND.saveTheScript()')
 # Geoff.addCommand('Save major version up ', 'majorVersionUp.majorVersionUp()', "^+Up")
 # Geoff.addCommand('Save minor version up ', 'minorVersionUp.minorVersionUp()', "^Up")
@@ -234,6 +232,7 @@ Geoff.addCommand('Reload Selected Read Nodes',
 Geoff.addSeparator()
 
 Geoff.addCommand('Import Nuke script from selected read nodes', 'importFromMeta()', "^+r")
+Geoff.addCommand('create read node from selected Write', 'read_from_write()', "alt+r")
 Geoff.addCommand('Open Selected nodes in Explorer', 'explorer.openInExplorer()')
 
 Geoff.addSeparator()
@@ -354,3 +353,11 @@ def showChannels():
 def showChannelsDisplay():
     node = nuke.selectedNode()
     nuke.display('showChannels()', node, 'show channels for %s' % node.name())
+
+
+def read_from_write():
+    write = nuke.selectedNode()
+    file_path = write['file'].value()
+    min_frame = int(min([x.split('.')[-2] for x in os.listdir(os.path.dirname(file_path)) if x.split('.')[-1] == 'exr']))
+    max_frame = int(max([x.split('.')[-2] for x in os.listdir(os.path.dirname(file_path)) if x.split('.')[-1] == 'exr']))
+    nuke.nodes.Read(file=file_path, first=min_frame, last=max_frame)

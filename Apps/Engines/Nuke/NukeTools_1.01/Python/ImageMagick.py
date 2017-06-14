@@ -25,7 +25,6 @@ import os
 
 
 def makeThumbnail():
-
   frameFirst = str('%0*d' % (4, int(nuke.Root()['first_frame'].value())))
   for node in nuke.allNodes('Write'):
     fileName = node['file'].value()
@@ -42,7 +41,6 @@ def makeThumbnail():
 
 
 def justThumPath():
-
   node = nuke.toNode("Write1")
   fileName = node['file'].value()
   NewFileName = fileName.rsplit('/', 1)[0] + '/.' + node['file'].value().split('/')[-1]
