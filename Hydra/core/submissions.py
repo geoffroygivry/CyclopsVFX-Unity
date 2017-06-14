@@ -67,18 +67,18 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task
     Submission['ptuid'] = new_ptuid
-    
+
     entity = utils.check_entity(task)
     if entity is not None:
         if entity == 'shot':
-            Submission[entity] = shot
+            Submission['Shot'] = shot
             Submission['first_frame'] = firstFrame
             Submission['last_frame'] = lastFrame
         elif entity == 'asset':
             Submission[entity] = asset
         else:
             Submission['entity'] = None
-    
+
     Submission['bkp_script'] = bkp_script
     Submission['Path'] = path
     Submission['comment'] = comments
