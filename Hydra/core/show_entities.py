@@ -83,7 +83,9 @@ def create_shot(show_name, seq_name, shot_name, frame_in=1001, frame_out=1001,
             "frame_out": frame_out,
             "tasks": tasks,
             "status": status,
-            "target_date": target_date
+            "target_date": target_date,
+            "latest_ptuid": None,
+            "latest_ptuid_comment": None
         }
     )
     shot_id = db.shots.find_one({"name": shot_name}).get("_id")
