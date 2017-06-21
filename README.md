@@ -2,7 +2,7 @@
 
 ## Welcome to CyclopsVFX Unity! ##
 
-**CyclopsVFX**, is an Open Source Production Tracking Software, for your **VFX, Video Game and Animation pipeline**. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
+**CyclopsVFX**, is an Open Source Production Tracking Software and pipeline toolkit, for your **VFX, Video Game and Animation pipeline**. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
 
 **Unity** is the framework that connects programs such as **Nuke, Maya, Mari, Clarisse IFX** together. It is mostly written in **python** and uses popular libraries like **PySide** and **PyQt4**. 
 
