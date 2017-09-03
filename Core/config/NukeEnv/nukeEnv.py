@@ -33,10 +33,10 @@ os.environ['GEOFF_PATH'] = os.getenv("SHOW_PATH")
 
 def NukePythonPath():
 
-    sys.path.append('/Python27/Lib/site-packages')
+    sys.path.append('/usr/lib/Python27/Lib/site-packages')
     print "\n==========================="
     nukeIntitialPath = os.getenv('CYC_ENGINE_NUKE')
-    nuke.pluginAddPath(os.path.join(nukeIntitialPath, 'NukeCallbacks'))
+    nuke.pluginAddPath(os.path.join(nukeIntitialPath, 'NukeCallBacks'))
     print "%s/NukeCallbacks Path added" % (nukeIntitialPath)
     nuke.pluginAddPath('%s/NukeTools_%s' % (nukeIntitialPath, NukeMenuVersion))
     print "%s/NukeTools_%s Path added" % (nukeIntitialPath, NukeMenuVersion)

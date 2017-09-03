@@ -27,8 +27,8 @@ import sys
 # how to use it : in a shell just type something like this :
 # e.g. nuke -t <PathToTheScript>/convert.py <myfile.####.exr> <myfile.####.jpg>
 r = nuke.nodes.Read(file=sys.argv[1])
-# rf = nuke.nodes.Reformat(type = 2, scale = .25)
-rf = nuke.nodes.Reformat(type=1, box_width=700)
+rf = nuke.nodes.Reformat(type=2, scale=.25)
+# rf = nuke.nodes.Reformat(type=1, box_width=700)
 w = nuke.nodes.Write(name="RenderThumbnail", file=sys.argv[2], use_limit=1, file_type=6)
 rf.setInput(0, r)
 w.setInput(0, rf)

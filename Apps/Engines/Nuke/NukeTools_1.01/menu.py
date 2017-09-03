@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python2
 
 # The MIT License (MIT)
 #
@@ -35,7 +35,6 @@ import reloadReadNodes
 import openNukeScriptMetadata
 import mari_bridge
 import rotateCenter
-import geoffNote
 import ToDoList
 import makeIcons
 import LookAt
@@ -50,8 +49,8 @@ from Apps.Steropes.SteropesDailies.Nuke import steropesDailies
 from Apps.Steropes.SteropesPublish.ui import PublishUi
 
 
-# import geoffroy_callbacks
-# geoffroy_callbacks.register_callbacks()
+import geoffroy_callbacks
+geoffroy_callbacks.register_callbacks()
 
 # nuke.Root() callback
 nuke.addOnUserCreate(load_frame_range.in_nuke)
@@ -220,7 +219,6 @@ Geoff = nuke.menu('Nuke').addMenu('CyclopsVFX')
 Geoff.addSeparator()
 
 
-Geoff.addCommand('GeoffNote', 'geoffNote.launchApp()')
 Geoff.addCommand('Reload Sanbox module', 'reloadSandboxModule()')
 
 Geoff.addSeparator()

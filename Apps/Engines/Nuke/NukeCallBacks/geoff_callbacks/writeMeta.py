@@ -23,6 +23,7 @@
 
 import nuke
 import os
+import platform
 import shutil
 import time
 import ImageMagick

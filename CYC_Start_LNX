@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+clear
+
+echo "   __      __   _                      _            ___        _            __   _______  __   ";
+echo "   \ \    / /__| |__ ___ _ __  ___    | |_ ___     / __|  _ __| |___ _ __ __\ \ / / __\ \/ /   ";
+echo "    \ \/\/ / -_) / _/ _ \ '  \/ -_)   |  _/ _ \   | (_| || / _| / _ \ '_ (_-<\ V /| _| >  <    ";
+echo "     \_/\_/\___|_\__\___/_|_|_\___|    \__\___/    \___\_, \__|_\___/ .__/__/ \_/ |_| /_/\_\   ";
+echo "                                                       |__/         |_|                        ";
+
+export DI_ROOT=/home/geoff/Dropbox
+export SHOW_PATH=$DI_ROOT/jobs
+export CYC_ROOT=$DI_ROOT/CyclopsVFX
+export CYC_HYDRA_PATH=$CYC_ROOT/Hydra
+export CYC_HYDRA_CACHE=$CYC_HYDRA_PATH/cache
+export CYC_CORE_PATH=$CYC_ROOT/Core/config
+export CYC_NUKE_ENV=$CYC_ROOT/Core/config/NukeEnv
+export CYC_MAYA_ENV=$CYC_ROOT/Core/config/MayaEnv
+export CYC_RV_ENV=$CYC_ROOT/Core/config/RVEnv
+export CYC_MARI_ENV=$CYC_ROOT/Core/config/MariEnv
+export CYC_3DE_ENV=$CYC_ROOT/Core/config/3DeEnv
+export CYC_CLARISSE_ENV=$CYC_ROOT/Core/config/ClarisseEnv
+export CYC_SHOW_ENV=$CYC_ROOT/Core/config/ShowEnv
+export CYC_POLYPHEMUS_PATH=$CYC_ROOT/Apps/Polyphemus
+export CYC_METEOR_PATH=$DI_ROOT/02_webDev/Meteor/subView
+export CYC_STEROPES_PATH=$CYC_ROOT/Apps/Steropes
+export CYC_ENGINE_NUKE=$CYC_ROOT/Apps/Engines/Nuke
+export CYC_ICON=$CYC_CORE_PATH/icons
+
+export USER_EMAIL=geoff.givry@gmail.com
+export CYC_USER=Geoffroy
+export USERNAME=$CYC_USER
+
+export PYTHONPATH=/usr/lib64/python2.7/site-packages/:/usr/lib/python2.7/site-packages/:$CYC_ROOT
+
+export NUKE_PATH=$CYC_NUKE_ENV
+export SHOW_PATH=$DI_ROOT/jobs
+
+showFunction() {
+    export SHOW="$1"
+    export JOB="$1"
+}
+
+shotFunction() {
+    export SHOT="$1"
+}
+
+seqFunction() {
+    export SEQ="$1"
+}
+
+taskFunction() {
+    export TASK="$1"
+}
+
+alias show=showFunction
+alias shot=shotFunction
+alias seq=seqFunction
+alias task=taskFunction

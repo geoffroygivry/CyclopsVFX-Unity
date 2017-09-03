@@ -22,6 +22,7 @@
 
 import nuke
 import os
+import platform
 
 
 def makeThumbnail():
@@ -35,7 +36,10 @@ def makeThumbnail():
     FirstFrameNewFileName = FirstFrameNewFileName.replace(ext, "jpg")
     ThePath = os.getenv("CYC_ENGINE_NUKE") + '/NukeTools_1.01'
     TheNukeVersion = os.getenv('NUKEVERSION')
-    IMCmd = (('nuke%s -t %s/Python/convert.py %s %s') % (TheNukeVersion, ThePath, FirstFramefileName, FirstFrameNewFileName))
+    if platform.system() == 'Linux':
+      IMCmd = (('nuke -t %s/Python/convert.py %s %s') % (ThePath, FirstFramefileName, FirstFrameNewFileName))
+    else:
+      IMCmd = (('nuke%s -t %s/Python/convert.py %s %s') % (TheNukeVersion, ThePath, FirstFramefileName, FirstFrameNewFileName))
     os.system(IMCmd)
     print "the file: ", FirstFrameNewFileName, "has been created!"
 

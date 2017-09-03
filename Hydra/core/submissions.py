@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2015 Geoffroy Givry
@@ -21,6 +23,7 @@
 # SOFTWARE.
 
 import os
+import platform
 import datetime
 import boto3
 from boto3.s3.transfer import S3Transfer
@@ -33,6 +36,10 @@ import db_queries as dbq
 import connect_db as con
 
 now = datetime.datetime.utcnow().isoformat()
+
+main_user = os.getenv('USERNAME')
+if main_user is None:
+    main_user = "CYC_USER"
 
 
 def get_connection():
@@ -64,8 +71,8 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     Submission['timestamp'] = datetime.datetime.utcnow()
     Submission['Show'] = show
     Submission['seq'] = seq
-    Submission['Username'] = os.getenv('USERNAME')
     Submission['Task'] = task
+    Submission['Username'] = main_user
     Submission['ptuid'] = new_ptuid
 
     entity = utils.check_entity(task)
@@ -87,7 +94,7 @@ def sendToDailies(path, comments, bkp_script, firstFrame, lastFrame, thumb, show
     dailiesCollections.save(Submission)
     send_to_S3(thumb)
     users_list = dbq.get_users_from_shot(shot)
-    notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "dailies", shot, now)
+    notifications.push_notifications({"name": main_user, "email": os.getenv('USER_EMAIL')}, users_list, "dailies", shot, now)
 
 
 def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROGRESS"):
@@ -105,14 +112,14 @@ def PublishIt(name, path, comments, task=os.getenv('TASK'), status="WORK IN PROG
     publishDict = dict()
     publishDict['date'] = now
     publishDict['type'] = "publish"
-    publishDict['user_name'] = os.getenv('USERNAME')
+    publishDict['user_name'] = main_user
     publishDict['task'] = task
     publishDict['status'] = status
     publishDict['asset'] = name
     publishDict['path'] = path
     publishDict['comment'] = comments
     PubCollections.save(publishDict)
-    notifications.push_notifications({"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')}, users_list, "publish", shot, now)
+    notifications.push_notifications({"name": main_user, "email": os.getenv('USER_EMAIL')}, users_list, "publish", shot, now)
 
 
 def submit_note(note, show=None, seq=None, shot=None):
@@ -133,7 +140,7 @@ def submit_note(note, show=None, seq=None, shot=None):
     db = get_connection()
     if show is not None:
         db.submissions.insert(
-            {"publisher": {"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')},
+            {"publisher": {"name": main_user, "email": os.getenv('USER_EMAIL')},
                 "show": show,
                 "note": note,
                 "type": "note",
@@ -142,7 +149,7 @@ def submit_note(note, show=None, seq=None, shot=None):
         )
     elif seq is not None:
         db.submissions.insert(
-            {"publisher": {"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')},
+            {"publisher": {"name": main_user, "email": os.getenv('USER_EMAIL')},
                 "seq": seq,
                 "note": note,
                 "type": "note",
@@ -151,7 +158,7 @@ def submit_note(note, show=None, seq=None, shot=None):
         )
     else:
         db.submissions.insert(
-            {"publisher": {"name": os.getenv('USERNAME'), "email": os.getenv('USER_EMAIL')},
+            {"publisher": {"name": main_user, "email": os.getenv('USER_EMAIL')},
                 "shot": shot,
                 "note": note,
                 "type": "note",
