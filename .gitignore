@@ -58,3 +58,10 @@ target/
 
 cyc_config.py
 credentials.js
+
+
+
+.directory
+__pycache__/
+*.ipynb
+.ipynb_checkpoints/
