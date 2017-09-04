@@ -43,10 +43,7 @@ showFunction() {
 
 shotFunction() {
     export SHOT="$1"
-}
-
-seqFunction() {
-    export SEQ="$1"
+    export SEQ=`echo $SHOT | cut -d '_' -f1`
 }
 
 taskFunction() {
@@ -55,5 +52,4 @@ taskFunction() {
 
 alias show=showFunction
 alias shot=shotFunction
-alias seq=seqFunction
 alias task=taskFunction
