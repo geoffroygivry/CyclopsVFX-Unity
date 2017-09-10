@@ -24,5 +24,22 @@
         "admin",
         "dev",
         "artist"
+    ],
+    "all_tasks": [
+        "CPA",
+        "RIG",
+        "TXT",
+        "MOD",
+        "CRE",
+        "SHD",
+        "CAM",
+        "LYT",
+        "DMP",
+        "ANM",
+        "LGT",
+        "CMP",
+        "SFX",
+        "RTO",
+        "PNT"
     ]
 }

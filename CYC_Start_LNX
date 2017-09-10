@@ -37,17 +37,83 @@ export NUKE_PATH=$CYC_NUKE_ENV
 export SHOW_PATH=$DI_ROOT/jobs
 
 showFunction() {
+active_shows_list+=`cat $CYC_CORE_PATH/shows.json | jq -r ".active_shows | to_entries[] | .key"`
+
+validator=false
+ while IFS=';' read -ra ADDR; do
+      for i in "${ADDR[@]}"; do
+          # process "$i"
+          show="$1"
+          if [ $show == $i ]; then
+            validator=true
+        fi
+      done
+ done <<< "$active_shows_list"
+
+if $validator ; then
     export SHOW="$1"
     export JOB="$1"
+    echo -e "\e[32mYou are now in the $1 environment\e[0m"
+else
+    echo -e "\e[31m$1 is not a valid show\e[0m"
+fi
 }
 
 shotFunction() {
-    export SHOT="$1"
-    export SEQ=`echo $SHOT | cut -d '_' -f1`
+
+    if [ -z "$SHOW" ]
+then
+      echo -e "\e[31mNo show environment found. Please start by typing 'show' and the name of the show you want to work on.\e[0m"
+else
+    SHOT="$1"
+    SEQ=`echo $SHOT | cut -d '_' -f1`
+    active_shots_list+=`cat $CYC_CORE_PATH/shows.json | jq -r ".active_shows.$SHOW.$SEQ | to_entries[] | .value"`
+
+    validator=false
+     while IFS=';' read -ra ADDR; do
+          for i in "${ADDR[@]}"; do
+              # process "$i"
+              show="$1"
+              if [ $show == $i ]; then
+                validator=true
+            fi
+          done
+     done <<< "$active_shots_list"
+
+    if $validator ; then
+        export SHOT="$1"
+        export SEQ=`echo $SHOT | cut -d '_' -f1`
+        echo -e "\e[32mYou are now in the $1 environment\e[0m"
+    else
+        echo -e "\e[31m$1 is not a valid shot\e[0m"
+        export SHOT=""
+        export SEQ=""
+    fi
+fi
 }
 
 taskFunction() {
+tasks_list+=`cat $CYC_CORE_PATH/tasks.json | jq -r ".all_tasks | to_entries[] | .value"`
+
+validator=false
+ while IFS=';' read -ra ADDR; do
+      for i in "${ADDR[@]}"; do
+          # process "$i"
+          show="$1"
+          if [ $show == $i ]; then
+            validator=true
+        fi
+      done
+ done <<< "$tasks_list"
+
+if $validator ; then
     export TASK="$1"
+    echo -e "\e[32mYour task is $1\e[0m"
+else
+    echo -e "\e[31m$1 is not a valid task\e[0m"
+    export TASK=""
+fi
+
 }
 
 alias show=showFunction
