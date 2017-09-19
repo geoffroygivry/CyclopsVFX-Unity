@@ -31,7 +31,7 @@ export USER_EMAIL=geoff.givry@gmail.com
 export CYC_USER=Geoffroy
 export USERNAME=$CYC_USER
 
-export PYTHONPATH=/usr/lib64/python2.7/site-packages/:/usr/lib/python2.7/site-packages/:$CYC_ROOT
+export PYTHONPATH=/usr/lib64/python2.7/site-packages/:/usr/lib/python2.7/site-packages/:$CYC_ROOT:/home/geoff/anaconda3/lib/python2.7/site-packages/
 
 export NUKE_PATH=$CYC_NUKE_ENV
 export SHOW_PATH=$DI_ROOT/jobs

@@ -35,7 +35,7 @@ icon = os.path.join(os.getenv('CYC_ICON'), 'Cyclops.ico')
 show = os.getenv('JOB')
 shot = os.getenv('SHOT')
 task = os.getenv('TASK')
-thumbnailPic = "/Dropbox/Cyclops/Core/config/icons/icon3d_2.png"
+thumbnailPic = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "icon3d_2.png")
 
 
 
@@ -123,7 +123,7 @@ class PublishPanel(QWidget):
 
 
         self.model = QFileSystemModel()
-        rootPath = "C:\\%s\\%s\\%s\\%s" % (os.getenv("DI_ROOT"), 'jobs', show, self.CurrentShotLoc)
+        rootPath = os.path.join(os.getenv("DI_ROOT"), 'jobs', show, self.CurrentShotLoc)
 
         # creation of the treeView
         self.model.setRootPath(unicode(QDir(rootPath)))
@@ -137,8 +137,8 @@ class PublishPanel(QWidget):
 
         setDir = QDir(rootPath)
         # setting up the model on the QTreeView
-        self.model.setFilter(QDir.Drives | QDir.NoDotAndDotDot | QDir.AllDirs) # showing Dirs only
-        tree.setRootIndex(self.model.index(unicode(QDir.path(setDir)))) # starts at the rootPath variable
+        self.model.setFilter(QDir.Drives | QDir.NoDotAndDotDot | QDir.AllDirs)  # showing Dirs only
+        tree.setRootIndex(self.model.index(unicode(QDir.path(setDir))))  # starts at the rootPath variable
         tree.clicked.connect(self.on_treeView_clicked)
 
 
