@@ -23,14 +23,49 @@
 import sys
 from PySide2 import QtGui, QtCore, QtWidgets
 from Apps.Brontes.View import brontes_main_ui as b_UI
+from Apps.Brontes.View import type_widget_ui as type_widget
+
+data = ["A", "B", "C"]
+
+
+class Type_widget(QtWidgets.QWidget, type_widget.Ui_type_widget):
+    # creation of our custom widget based on type_widget UI
+    def __init__(self):
+        super(Type_widget, self).__init__()
+
+        # Set up the user interface from Designer.
+        self.setupUi(self)
+
+    def set_text(self, text):
+        self.type_label.setText(text)
+
+    def set_icon(self, icon):
+        self.type_icon.setPixmap(QtGui.QPixmap(icon))
+
+
+class SimpleList(QtCore.QAbstractListModel):
+    # creation of our model structure
+    def __init__(self, contents):
+        super(SimpleList, self).__init__()
+        self.contents = contents
+
+    def rowCount(self, parent):
+        return len(self.contents)
+
+    def data(self, index, role):
+        if role == QtCore.Qt.DisplayRole:
+            return str(self.contents[index.row()])
 
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
+    # main window UI
     def __init__(self):
         super(Brontes, self).__init__()
 
         # Set up the user interface from Designer.
         self.setupUi(self)
+        model = SimpleList(data)
+        self.types_listView.setModel(model)
 
 
 def runStandalone():
