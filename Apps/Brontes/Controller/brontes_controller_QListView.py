@@ -21,10 +21,11 @@
 # SOFTWARE.
 
 import sys
-import os
 from PySide2 import QtGui, QtCore, QtWidgets
 from Apps.Brontes.View import brontes_main_ui as b_UI
 from Apps.Brontes.View import type_widget_ui as type_widget
+
+data = ["A", "B", "C"]
 
 
 class Type_widget(QtWidgets.QWidget, type_widget.Ui_type_widget):
@@ -42,6 +43,20 @@ class Type_widget(QtWidgets.QWidget, type_widget.Ui_type_widget):
         self.type_icon.setPixmap(QtGui.QPixmap(icon))
 
 
+class SimpleList(QtCore.QAbstractListModel):
+    # creation of our model structure
+    def __init__(self, contents):
+        super(SimpleList, self).__init__()
+        self.contents = contents
+
+    def rowCount(self, parent):
+        return len(self.contents)
+
+    def data(self, index, role):
+        if role == QtCore.Qt.DisplayRole:
+            return str(self.contents[index.row()])
+
+
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     # main window UI
     def __init__(self):
@@ -49,18 +64,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
         # Set up the user interface from Designer.
         self.setupUi(self)
-        type_list = ['All', 'Cam', "Layout", "CG", "3D", "Libs"]
-        icon_all = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "all_icon.png")
-
-        # populating The left widget list part with different types of assets.
-        for n in type_list:
-            type_wid = Type_widget()
-            type_wid.set_text(n)
-            type_wid.set_icon(icon_all)
-            wid2 = QtWidgets.QListWidgetItem()
-            wid2.setSizeHint(QtCore.QSize(100, 40))
-            self.types_listWidget.addItem(wid2)
-            self.types_listWidget.setItemWidget(wid2, type_wid)
+        model = SimpleList(data)
+        self.types_listView.setModel(model)
 
 
 def run_in_nuke():

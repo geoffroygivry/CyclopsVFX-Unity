@@ -1,24 +1,24 @@
-#The MIT License (MIT)
+# The MIT License (MIT)
 #
-#Copyright (c) 2015 Geoffroy Givry
+# Copyright (c) 2015 Geoffroy Givry
 #
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 
 import sys
@@ -38,17 +38,16 @@ task = os.getenv('TASK')
 thumbnailPic = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "icon3d_2.png")
 
 
-
 class QCustomQWidget (QWidget):
-    def __init__ (self, parent = None):
+    def __init__(self, parent=None):
         super(QCustomQWidget, self).__init__(parent)
         self.textQVBoxLayout = QVBoxLayout()
-        self.textUpQLabel    = QLabel()
-        self.textDownQLabel  = QLabel()
+        self.textUpQLabel = QLabel()
+        self.textDownQLabel = QLabel()
         self.textQVBoxLayout.addWidget(self.textUpQLabel)
-        #self.textQVBoxLayout.addWidget(self.textDownQLabel)
-        self.allQHBoxLayout  = QHBoxLayout()
-        self.iconQLabel      = QLabel()
+        # self.textQVBoxLayout.addWidget(self.textDownQLabel)
+        self.allQHBoxLayout = QHBoxLayout()
+        self.iconQLabel = QLabel()
         self.iconQLabel.setProperty('labelClass', 'MiniIcon')
         self.allQHBoxLayout.addWidget(self.iconQLabel, 0)
         self.allQHBoxLayout.addWidget(self.textUpQLabel, 1)
@@ -69,17 +68,14 @@ class QCustomQWidget (QWidget):
             color: rgb(125, 125, 125);
         ''')
 
-    def setTextUp (self, text):
+    def setTextUp(self, text):
         self.textUpQLabel.setText(text)
 
-    def setTextDown (self, text):
+    def setTextDown(self, text):
         self.textDownQLabel.setText(text)
 
-    def setIcon (self, imagePath):
+    def setIcon(self, imagePath):
         self.iconQLabel.setPixmap(QPixmap(imagePath))
-
-
-
 
 
 class PublishPanel(QWidget):
@@ -120,8 +116,6 @@ class PublishPanel(QWidget):
         treeLayout = QHBoxLayout()
         self.treeLayout02 = QVBoxLayout()
 
-
-
         self.model = QFileSystemModel()
         rootPath = os.path.join(os.getenv("DI_ROOT"), 'jobs', show, self.CurrentShotLoc)
 
@@ -141,12 +135,11 @@ class PublishPanel(QWidget):
         tree.setRootIndex(self.model.index(unicode(QDir.path(setDir))))  # starts at the rootPath variable
         tree.clicked.connect(self.on_treeView_clicked)
 
-
         # Layout for the QTreeView
         self.treeLayout02.addWidget(tree)
         treeLayout.addLayout(self.treeLayout02)
 
-        ### logo and name of the panel
+        # logo and name of the panel
         LogoLayout = QHBoxLayout()
         cycIcon = QLabel()
         cycIcon.setPixmap(QPixmap(thumbnailPic))
@@ -156,20 +149,19 @@ class PublishPanel(QWidget):
         StePubLabel = QLabel(nameFormat)
         LogoLayout.addWidget(cycIcon)
         LogoLayout.addWidget(StePubLabel)
-        ### end of logo and name of the panel
-
+        # end of logo and name of the panel
 
         labelSelectFile2Pub = QLabel('Select files to publish:')
 
-        ### creation of a model to show Files only on the QListView
+        # creation of a model to show Files only on the QListView
         self.listModel = QFileSystemModel()
-        self.listModel.setFilter(QDir.Files) # showing files only
+        self.listModel.setFilter(QDir.Files)  # showing files only
 
-        ### Creating the QListView
+        # Creating the QListView
         self.myQListWidget = QListWidget(self)
         self.myQListWidget.setMinimumHeight(330)
         self.myQListWidget.setSelectionMode(QAbstractItemView.MultiSelection)
-        #self.myQListWidget.setModel(self.listModel)
+        # self.myQListWidget.setModel(self.listModel)
 
         self.pubPushButton = QPushButton('Publish!')
         self.pubPushButton.setProperty('labelClass', 'pushB')
@@ -181,8 +173,7 @@ class PublishPanel(QWidget):
         self.commentsTextEdit = QTextEdit()
         self.commentsTextEdit.setProperty('labelClass', 'DailiesComment')
 
-
-        #layout processes
+        # layout processes
 
         part2LayoutTree = QVBoxLayout()
         part2LayoutTree.addLayout(LogoLayout)
@@ -193,7 +184,6 @@ class PublishPanel(QWidget):
         part2LayoutTree.addWidget(labelcomment)
         part2LayoutTree.addWidget(self.commentsTextEdit)
         treeLayout.addLayout(part2LayoutTree)
-
 
         mainVertLayout.addLayout(HeaderLayout)
         mainVertLayout.addLayout(treeLayout)
@@ -210,7 +200,6 @@ class PublishPanel(QWidget):
         # text = open("C:/Dropbox/Cyclops/Apps/Steropes/StyleSheet/Style_v02.txt").read()
         # self.setStyleSheet(text)
 
-
     def goPublish(self):
 
         for item in self.myQListWidget.selectedItems():
@@ -219,10 +208,6 @@ class PublishPanel(QWidget):
             commentField = unicode(self.commentsTextEdit.toPlainText())
             submissions.PublishIt(pubName, pubPath, commentField)
         self.close()
-
-
-
-
 
     def on_treeView_clicked(self, index):
 
@@ -241,7 +226,7 @@ class PublishPanel(QWidget):
         listimg = os.listdir(filePath)
 
         for n in listimg:
-            if n.split('.')[-1] =='exr':
+            if n.split('.')[-1] == 'exr':
                 exrList.append(n)
             else:
                 nonExrList.append(n)
@@ -250,7 +235,7 @@ class PublishPanel(QWidget):
 
             # Create QCustomQWidget
             self.myQCustomQWidget = QCustomQWidget()
-            self.myQCustomQWidget.setIcon("/Dropbox/Cyclops/Core/config/icons/rndrIcon2.png")
+            self.myQCustomQWidget.setIcon(os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "rndrIcon2.png"))
             s = pyseq.Sequence(exrList)
             self.myQCustomQWidget.setTextUp(unicode(s))
 
@@ -267,11 +252,9 @@ class PublishPanel(QWidget):
             # set the dictionary keys for the publishing process
             self.infoWidget[str(myQListWidgetItem)] = {'fullPath': fullPathStr, 'name': fullPathStr.split('/')[-1].split('.')[0]}
 
-
             # Add QListWidgetItem into QListWidget
             self.myQListWidget.addItem(myQListWidgetItem)
             self.myQListWidget.setItemWidget(myQListWidgetItem, self.myQCustomQWidget)
-
 
         elif nonExrList:
             # Create QCustomQWidget
@@ -280,12 +263,11 @@ class PublishPanel(QWidget):
                 fullPathStr = str(filePath) + '/' + str(n)
                 self.myQCustomQWidget = QCustomQWidget()
                 if n.split(".")[-1] == 'nk':
-                    self.myQCustomQWidget.setIcon("/Dropbox/Cyclops/Core/config/icons/nukeSmall.png")
+                    self.myQCustomQWidget.setIcon(os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "nukeSmall.png"))
                 elif n.split(".")[-1] == 'jpg':
-                    self.myQCustomQWidget.setIcon("/Dropbox/Cyclops/Core/config/icons/jpgIcons.png")
+                    self.myQCustomQWidget.setIcon(os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "jpgIcons.png"))
                 else:
-                    self.myQCustomQWidget.setIcon("/Dropbox/Cyclops/Core/config/icons/CYCIconSmall.png")
-
+                    self.myQCustomQWidget.setIcon(os.path.join(os.getenv("CYC_CORE_PATH"), "icons", "CYCIconSmall.png"))
 
                 self.myQCustomQWidget.setTextUp(unicode(n))
 
@@ -293,26 +275,19 @@ class PublishPanel(QWidget):
                 myQListWidgetItem = QListWidgetItem(self.myQListWidget)
                 myQListWidgetItem.setBackground(QColor('grey'))
 
-
                 # Set size hint
                 myQListWidgetItem.setSizeHint(self.myQCustomQWidget.sizeHint())
 
                 # set the dictionary keys for the publishing process
                 self.infoWidget[str(myQListWidgetItem)] = {'fullPath': fullPathStr, 'name': fullPathStr.split('/')[-1].split('.')[0]}
 
-
-
                 # Add QListWidgetItem into QListWidget
                 self.myQListWidget.addItem(myQListWidgetItem)
                 self.myQListWidget.setItemWidget(myQListWidgetItem, self.myQCustomQWidget)
 
-
-
-
     def clearListWidget(self):
         # Clear the contents of the previous folder
         self.myQListWidget.clear()
-
 
 
 def runStandalone():
