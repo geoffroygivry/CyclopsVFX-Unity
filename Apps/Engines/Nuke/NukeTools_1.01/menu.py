@@ -47,6 +47,7 @@ import saveTheScript
 import load_frame_range
 from Apps.Steropes.SteropesDailies.Nuke import steropesDailies
 from Apps.Steropes.SteropesPublish.ui import PublishUi
+from Apps.Brontes.Controller import brontes_controller
 
 
 import geoffroy_callbacks
@@ -203,6 +204,8 @@ try:
         menu2.addSeparator()
         menu2.addCommand('Steropes/Dailies Submission', 'steropesDailies.start()')
         menu2.addCommand('Steropes/Publish Submission', 'PublishUi.runInNuke()')
+        menu2.addSeparator()
+        menu2.addCommand('Brontes/Dock In Nuke', 'brontes_controller.dock_in_nuke()')
     else:
         menu2 = nuke.menu('Nuke').addMenu('No Env Mode').setEnabled(False)
 
@@ -217,7 +220,6 @@ Geoff = nuke.menu('Nuke').addMenu('CyclopsVFX')
 
 
 Geoff.addSeparator()
-
 
 Geoff.addCommand('Reload Sanbox module', 'reloadSandboxModule()')
 

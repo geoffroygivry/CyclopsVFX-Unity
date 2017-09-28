@@ -146,9 +146,15 @@
       <widget class="QLineEdit" name="poly_lineEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>10</horstretch>
+         <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="maximumSize">
         <size>
@@ -239,7 +245,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>180</width>
+           <width>200</width>
            <height>16777215</height>
           </size>
          </property>
@@ -260,10 +266,10 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QListWidget" name="listWidget_2"/>
+          <widget class="QListWidget" name="asset_listWidget"/>
          </item>
          <item>
-          <widget class="QTextBrowser" name="textBrowser">
+          <widget class="QTextBrowser" name="bottom_textBrowser">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -282,6 +288,18 @@
        </item>
        <item>
         <widget class="QGroupBox" name="Detail_GroupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="flat">
           <bool>false</bool>
          </property>
