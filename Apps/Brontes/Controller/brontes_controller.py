@@ -41,6 +41,8 @@ from Apps.Brontes.View import brontes_main_ui as b_UI
 from Apps.Brontes.View import type_widget_ui as type_widget
 from Apps.Brontes.View import asset_widget_ui as asset_widget
 
+from Apps.Brontes.View import MainStyleSheet
+
 
 class Type_widget(QtWidgets.QWidget, type_widget.Ui_type_widget):
     # creation of our custom widget based on type_widget UI
@@ -66,7 +68,6 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         self.setupUi(self)
 
 
-
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     # main window UI
     def __init__(self):
@@ -76,6 +77,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.setupUi(self)
         self.populate_typeWidget()
         self.populate_assets()
+        self.asset_listWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        MainStyleSheet.setStyleSheet(self)
 
     def populate_typeWidget(self):
         type_dict = {"All": "all_icon.png", "Cam": "cam_icon.png",
@@ -89,16 +92,17 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             type_wid.set_text(n)
             type_wid.set_icon(icon_all)
             wid2 = QtWidgets.QListWidgetItem()
-            wid2.setSizeHint(QtCore.QSize(120, 40))
+            wid2.setSizeHint(QtCore.QSize(120, 50))
             self.types_listWidget.addItem(wid2)
             self.types_listWidget.setItemWidget(wid2, type_wid)
 
     def populate_assets(self):
         asset_wid = Asset_widget()
         wid2 = QtWidgets.QListWidgetItem()
-        wid2.setSizeHint(QtCore.QSize(150, 140))
+        wid2.setSizeHint(QtCore.QSize(110, 90))
         self.asset_listWidget.addItem(wid2)
         self.asset_listWidget.setItemWidget(wid2, asset_wid)
+        wid2.setBackground(QtGui.QColor(45, 45, 45))
 
 
 def float_in_nuke():

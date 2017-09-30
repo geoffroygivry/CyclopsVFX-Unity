@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Apps/Brontes/View/asset_widget.ui'
 #
-# Created: Thu Sep 28 23:24:10 2017
+# Created: Sat Sep 30 22:14:53 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Asset_Widget(object):
     def setupUi(self, Asset_Widget):
         Asset_Widget.setObjectName("Asset_Widget")
-        Asset_Widget.resize(586, 89)
+        Asset_Widget.resize(576, 71)
         self.horizontalLayout = QtGui.QHBoxLayout(Asset_Widget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.icon = QtGui.QLabel(Asset_Widget)
@@ -28,6 +28,7 @@ class Ui_Asset_Widget(object):
         self.icon.setObjectName("icon")
         self.horizontalLayout.addWidget(self.icon)
         self.Main_gridLayout = QtGui.QGridLayout()
+        self.Main_gridLayout.setHorizontalSpacing(6)
         self.Main_gridLayout.setObjectName("Main_gridLayout")
         self.userName = QtGui.QLabel(Asset_Widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)

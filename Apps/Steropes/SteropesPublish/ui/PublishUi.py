@@ -197,8 +197,6 @@ class PublishPanel(QWidget):
         self.setFocus()
         self.setGeometry(100, 100, 1000, 950)
         MainStyleSheet.setStyleSheet(self)
-        # text = open("C:/Dropbox/Cyclops/Apps/Steropes/StyleSheet/Style_v02.txt").read()
-        # self.setStyleSheet(text)
 
     def goPublish(self):
 
