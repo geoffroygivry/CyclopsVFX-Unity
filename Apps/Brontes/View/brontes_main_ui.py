@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main.ui'
 #
-# Created: Thu Sep 28 22:51:00 2017
+# Created: Sun Oct  1 21:26:18 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,6 +25,11 @@ class Ui_brontes_main(object):
         self.cyc_icon.setPixmap(QtGui.QPixmap("../../../Core/config/icons/cyc_small.png"))
         self.cyc_icon.setObjectName("cyc_icon")
         self.top_horizontal_layout.addWidget(self.cyc_icon)
+        self.vertical_divider = QtGui.QFrame(brontes_main)
+        self.vertical_divider.setFrameShape(QtGui.QFrame.VLine)
+        self.vertical_divider.setFrameShadow(QtGui.QFrame.Sunken)
+        self.vertical_divider.setObjectName("vertical_divider")
+        self.top_horizontal_layout.addWidget(self.vertical_divider)
         self.show_shot_layout = QtGui.QFormLayout()
         self.show_shot_layout.setLabelAlignment(QtCore.Qt.AlignCenter)
         self.show_shot_layout.setFormAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
@@ -56,11 +61,6 @@ class Ui_brontes_main(object):
         self.shot_comboBox.setObjectName("shot_comboBox")
         self.show_shot_layout.setWidget(1, QtGui.QFormLayout.FieldRole, self.shot_comboBox)
         self.top_horizontal_layout.addLayout(self.show_shot_layout)
-        self.vertical_divider = QtGui.QFrame(brontes_main)
-        self.vertical_divider.setFrameShape(QtGui.QFrame.VLine)
-        self.vertical_divider.setFrameShadow(QtGui.QFrame.Sunken)
-        self.vertical_divider.setObjectName("vertical_divider")
-        self.top_horizontal_layout.addWidget(self.vertical_divider)
         spacerItem = QtGui.QSpacerItem(250, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.top_horizontal_layout.addItem(spacerItem)
         self.top_vertical_layout.addLayout(self.top_horizontal_layout)

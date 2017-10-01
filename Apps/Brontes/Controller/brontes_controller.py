@@ -78,6 +78,10 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.populate_typeWidget()
         self.populate_assets()
         self.asset_listWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+        self.cyc_icon.setPixmap(QtGui.QPixmap(
+                                os.path.join(os.getenv("CYC_CORE_PATH"),
+                                             "icons", "cyc_small.png")))
+
         MainStyleSheet.setStyleSheet(self)
 
     def populate_typeWidget(self):
@@ -94,15 +98,19 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             wid2 = QtWidgets.QListWidgetItem()
             wid2.setSizeHint(QtCore.QSize(120, 50))
             self.types_listWidget.addItem(wid2)
+            self.types_listWidget.setContentsMargins(100, 100, 100, 100)
             self.types_listWidget.setItemWidget(wid2, type_wid)
 
     def populate_assets(self):
-        asset_wid = Asset_widget()
-        wid2 = QtWidgets.QListWidgetItem()
-        wid2.setSizeHint(QtCore.QSize(110, 90))
-        self.asset_listWidget.addItem(wid2)
-        self.asset_listWidget.setItemWidget(wid2, asset_wid)
-        wid2.setBackground(QtGui.QColor(45, 45, 45))
+        for n in range(3):
+            asset_wid = Asset_widget()
+            wid2 = QtWidgets.QListWidgetItem()
+            asset_wid.setProperty("asset", True)
+            wid2.setSizeHint(QtCore.QSize(110, 90))
+            self.asset_listWidget.addItem(wid2)
+            self.asset_listWidget.setItemWidget(wid2, asset_wid)
+            self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
+            wid2.setBackground(QtGui.QColor(45, 45, 45))
 
 
 def float_in_nuke():

@@ -34,8 +34,9 @@ QListView::item:selected {
     border: 3px solid #6a6ea9;
 }
 
-QListView:item {
-    border: 1px solid black;
+QListView::item["asset"=true] {
+    border: 2px solid black;
+
 }
 
 

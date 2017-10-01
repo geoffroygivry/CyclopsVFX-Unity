@@ -35,6 +35,13 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="vertical_divider">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QFormLayout" name="show_shot_layout">
          <property name="labelAlignment">
           <set>Qt::AlignCenter</set>
@@ -98,13 +105,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="Line" name="vertical_divider">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
        </item>
        <item>
         <spacer name="search_horizontalSpacer">
