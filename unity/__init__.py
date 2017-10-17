@@ -20,13 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import unity
-from Core.config import cyc_config as cfg
+import urllib2
+import json
 
 
-class Model():
-    def __init__(self):
-        print "Model initialized..."
-
-    def get_latest_publish_shot(self, show_name, shot_name):
-        return unity.get_response("{}/api/unity/{}/{}?published=latest".format(cfg.POLY_SERVER, show_name, shot_name))
+def get_response(url):
+    response = urllib2.urlopen(url)
+    return json.loads(response.read().decode())

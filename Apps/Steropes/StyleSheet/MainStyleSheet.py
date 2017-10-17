@@ -215,7 +215,7 @@ QTextEdit[labelClass="DailiesComment"]{
 
 QLabel[labelClass="Main"]{
         background: rgb(20,20,20);
-        background-image: url(/Dropbox/CyclopsVFX/Apps/Steropes/SteropesDailies/resources/DailiesBanner04.jpg);
+        background-image: url(/home/geoff/Dropbox/CyclopsVFX/Apps/Steropes/SteropesDailies/resources/DailiesBanner04.jpg);
         font-size : 24px;
         font-weight : bold;
         font-family : Arial;
