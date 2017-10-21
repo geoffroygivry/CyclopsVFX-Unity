@@ -22,11 +22,23 @@
 
 import unity
 from Core.config import cyc_config as cfg
+from Hydra.core import connect_db as con
+
+db = con.server.hydra
 
 
 class Model():
     def __init__(self):
         print "Model initialized..."
 
-    def get_latest_publish_shot(self, show_name, shot_name):
+    def get_all_latest_publish_shot(self, show_name, shot_name):
         return unity.get_response("{}/api/unity/{}/{}?published=latest".format(cfg.POLY_SERVER, show_name, shot_name))
+
+    def get_active_shows(self):
+        return [x.get('name') for x in db.shows.find({"active": True})]
+
+    def get_seqs(self, show_name):
+        return [x.get('name') for x in db.seqs.find({"show": show_name})]
+
+    def get_shots(self, show_name, seq_name):
+        return [x.get('name') for x in db.shots.find({"show": show_name, "seq": seq_name})]

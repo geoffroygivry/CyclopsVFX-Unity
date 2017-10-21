@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main.ui'
 #
-# Created: Sun Oct  1 21:26:18 2017
+# Created: Sat Oct 21 22:25:43 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,7 +22,7 @@ class Ui_brontes_main(object):
         self.cyc_icon = QtGui.QLabel(brontes_main)
         self.cyc_icon.setMaximumSize(QtCore.QSize(150, 16777215))
         self.cyc_icon.setText("")
-        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../Core/config/icons/cyc_small.png"))
+        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../../../../Core/config/icons/cyc_small.png"))
         self.cyc_icon.setObjectName("cyc_icon")
         self.top_horizontal_layout.addWidget(self.cyc_icon)
         self.vertical_divider = QtGui.QFrame(brontes_main)
@@ -48,9 +48,21 @@ class Ui_brontes_main(object):
         self.show_comboBox.setMaximumSize(QtCore.QSize(200, 16777215))
         self.show_comboBox.setObjectName("show_comboBox")
         self.show_shot_layout.setWidget(0, QtGui.QFormLayout.FieldRole, self.show_comboBox)
+        self.seq_label = QtGui.QLabel(brontes_main)
+        self.seq_label.setObjectName("seq_label")
+        self.show_shot_layout.setWidget(1, QtGui.QFormLayout.LabelRole, self.seq_label)
+        self.seq_comboBox = QtGui.QComboBox(brontes_main)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.seq_comboBox.sizePolicy().hasHeightForWidth())
+        self.seq_comboBox.setSizePolicy(sizePolicy)
+        self.seq_comboBox.setMinimumSize(QtCore.QSize(200, 0))
+        self.seq_comboBox.setObjectName("seq_comboBox")
+        self.show_shot_layout.setWidget(1, QtGui.QFormLayout.FieldRole, self.seq_comboBox)
         self.shot_label = QtGui.QLabel(brontes_main)
         self.shot_label.setObjectName("shot_label")
-        self.show_shot_layout.setWidget(1, QtGui.QFormLayout.LabelRole, self.shot_label)
+        self.show_shot_layout.setWidget(2, QtGui.QFormLayout.LabelRole, self.shot_label)
         self.shot_comboBox = QtGui.QComboBox(brontes_main)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -59,7 +71,7 @@ class Ui_brontes_main(object):
         self.shot_comboBox.setSizePolicy(sizePolicy)
         self.shot_comboBox.setMinimumSize(QtCore.QSize(200, 0))
         self.shot_comboBox.setObjectName("shot_comboBox")
-        self.show_shot_layout.setWidget(1, QtGui.QFormLayout.FieldRole, self.shot_comboBox)
+        self.show_shot_layout.setWidget(2, QtGui.QFormLayout.FieldRole, self.shot_comboBox)
         self.top_horizontal_layout.addLayout(self.show_shot_layout)
         spacerItem = QtGui.QSpacerItem(250, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.top_horizontal_layout.addItem(spacerItem)
@@ -87,6 +99,10 @@ class Ui_brontes_main(object):
         self.poly_lineEdit.setBaseSize(QtCore.QSize(0, 12))
         self.poly_lineEdit.setObjectName("poly_lineEdit")
         self.mid_horizontal_layout.addWidget(self.poly_lineEdit)
+        self.latest_checkBox = QtGui.QCheckBox(brontes_main)
+        self.latest_checkBox.setChecked(True)
+        self.latest_checkBox.setObjectName("latest_checkBox")
+        self.mid_horizontal_layout.addWidget(self.latest_checkBox)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.mid_horizontal_layout.addItem(spacerItem1)
         self.search_lineEdit = QtGui.QLineEdit(brontes_main)
@@ -101,7 +117,7 @@ class Ui_brontes_main(object):
         self.mid_horizontal_layout.addWidget(self.search_lineEdit)
         self.search_button = QtGui.QToolButton(brontes_main)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.search_button.setIcon(icon)
         self.search_button.setObjectName("search_button")
         self.mid_horizontal_layout.addWidget(self.search_button)
@@ -217,8 +233,10 @@ class Ui_brontes_main(object):
     def retranslateUi(self, brontes_main):
         brontes_main.setWindowTitle(QtGui.QApplication.translate("brontes_main", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.show_label.setText(QtGui.QApplication.translate("brontes_main", "Show", None, QtGui.QApplication.UnicodeUTF8))
+        self.seq_label.setText(QtGui.QApplication.translate("brontes_main", "Seq", None, QtGui.QApplication.UnicodeUTF8))
         self.shot_label.setText(QtGui.QApplication.translate("brontes_main", "Shot", None, QtGui.QApplication.UnicodeUTF8))
         self.poly_label.setText(QtGui.QApplication.translate("brontes_main", "Polyphemus ", None, QtGui.QApplication.UnicodeUTF8))
+        self.latest_checkBox.setText(QtGui.QApplication.translate("brontes_main", "latest", None, QtGui.QApplication.UnicodeUTF8))
         self.search_button.setText(QtGui.QApplication.translate("brontes_main", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.icon_detail.setText(QtGui.QApplication.translate("brontes_main", "icon Asset", None, QtGui.QApplication.UnicodeUTF8))
         self.version_detail_label.setText(QtGui.QApplication.translate("brontes_main", "<html><head/><body><p><span style=\" font-size:8pt; font-weight:600; color:#00557f;\">Version</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
