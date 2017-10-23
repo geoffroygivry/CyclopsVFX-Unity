@@ -37,6 +37,7 @@ except ImportError:
     import PySide2.QtWidgets as QtWidgets
     import PySide2.QtUiTools as QtUiTools
 
+from Core.utils import cyc_utils as utils
 from Apps.Brontes.Model import hydra_model as hm
 from Apps.Brontes.View import brontes_main_ui as b_UI
 from Apps.Brontes.View import type_widget_ui as type_widget
@@ -67,6 +68,9 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         # Set up the user interface from Designer.
         self.setupUi(self)
 
+    def set_icon(self, icon):
+        self.icon.setPixmap(QtGui.QPixmap(icon))
+
     def set_username(self, text):
         self.userName.setText(text)
 
@@ -83,7 +87,7 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         self.frame_range_data.setText("{}-{}".format(first, last))
 
     def set_version(self, text):
-        self.version_data("v{}".format(text))
+        self.version_data.setText("v{}".format(text))
 
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
@@ -138,17 +142,30 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         type_asset = self.get_type_asset()
         if type_asset == "All":
             if self.latest_checkBox.isChecked():
-                assets = self.Model.get_all_latest_publish_shot()
-                print assets
-        # for n in range(3):
-        #     asset_wid = Asset_widget()
-        #     wid2 = QtWidgets.QListWidgetItem()
-        #     asset_wid.setProperty("asset", True)
-        #     wid2.setSizeHint(QtCore.QSize(110, 90))
-        #     self.asset_listWidget.addItem(wid2)
-        #     self.asset_listWidget.setItemWidget(wid2, asset_wid)
-        #     self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
-        #     wid2.setBackground(QtGui.QColor(45, 45, 45))
+                assets = self.Model.get_all_latest_publish_shot(self.show_comboBox.currentText(), self.shot_comboBox.currentText())
+            else:
+                assets = []
+            for asset in assets:
+                asset_widget = Asset_widget()
+                uuid_obj = utils.UUID(asset.get('UUID'), "shot")
+                asset_widget.set_username(asset.get('publisher'))
+                pretty_date = utils.pretty_date(asset.get('pub_date'))
+                asset_widget.set_date(pretty_date)
+                asset_widget.set_task(uuid_obj.task())
+                asset_widget.set_name(uuid_obj.name())
+                if asset.get('type') == "2D":
+                    asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "Icon_2D_small.png"))
+                    first_frame = asset.get('first_frame')
+                    last_frame = asset.get('last_frame')
+                    asset_widget.set_frameRange(first_frame, last_frame)
+                asset_widget.set_version(uuid_obj.version())
+                wid2 = QtWidgets.QListWidgetItem()
+                asset_widget.setProperty("asset", True)
+                wid2.setSizeHint(asset_widget.sizeHint())
+                self.asset_listWidget.addItem(wid2)
+                self.asset_listWidget.setItemWidget(wid2, asset_widget)
+                self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
+                wid2.setBackground(QtGui.QColor(45, 45, 45))
 
     def get_type_asset(self):
         selected_type_widget = self.types_listWidget.itemWidget(self.types_listWidget.currentItem())
@@ -156,19 +173,23 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             return selected_type_widget.type_label.text()
 
     def populate_shows(self):
+        self.show_comboBox.clear()
         shows = self.Model.get_active_shows()
         self.show_comboBox.addItems(shows)
         self.show_comboBox.setCurrentIndex(shows.index(os.getenv('SHOW')))
 
     def populate_seqs(self):
+        self.seq_comboBox.clear()
         seqs = self.Model.get_seqs(self.show_comboBox.currentText())
         self.seq_comboBox.addItems(seqs)
         self.seq_comboBox.setCurrentIndex(seqs.index(os.getenv('SEQ')))
 
     def populate_shots(self):
+        self.shot_comboBox.clear()
         shots = self.Model.get_shots(self.show_comboBox.currentText(), self.seq_comboBox.currentText())
         self.shot_comboBox.addItems(shots)
-        self.shot_comboBox.setCurrentIndex(shots.index(os.getenv('SHOT')))
+        if os.getenv('SHOT') in shots:
+            self.shot_comboBox.setCurrentIndex(shots.index(os.getenv('SHOT')))
 
 
 def float_in_nuke():
