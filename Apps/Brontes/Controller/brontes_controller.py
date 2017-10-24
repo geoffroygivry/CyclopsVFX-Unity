@@ -67,6 +67,7 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
 
         # Set up the user interface from Designer.
         self.setupUi(self)
+        self.version_data.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
 
     def set_icon(self, icon):
         self.icon.setPixmap(QtGui.QPixmap(icon))
@@ -88,6 +89,7 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
 
     def set_version(self, text):
         self.version_data.setText("v{}".format(text))
+        self.version_data.setStyleSheet("qproperty-alignment: AlignRight;")
 
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
@@ -139,6 +141,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.types_listWidget.setItemWidget(wid2, type_wid)
 
     def populate_entities(self):
+        self.asset_listWidget.clear()
         type_asset = self.get_type_asset()
         if type_asset == "All":
             if self.latest_checkBox.isChecked():
@@ -155,9 +158,13 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 asset_widget.set_name(uuid_obj.name())
                 if asset.get('type') == "2D":
                     asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "Icon_2D_small.png"))
-                    first_frame = asset.get('first_frame')
-                    last_frame = asset.get('last_frame')
+                    first_frame = int(asset.get('first_frame'))
+                    last_frame = int(asset.get('last_frame'))
                     asset_widget.set_frameRange(first_frame, last_frame)
+                if asset.get('type') == "script":
+                    asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "script_small.png"))
+                    asset_widget.frame_range_label.hide()
+                    asset_widget.frame_range_data.hide()
                 asset_widget.set_version(uuid_obj.version())
                 wid2 = QtWidgets.QListWidgetItem()
                 asset_widget.setProperty("asset", True)
@@ -167,10 +174,18 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
                 wid2.setBackground(QtGui.QColor(45, 45, 45))
 
+    def populate_details(self):
+        pass
+
     def get_type_asset(self):
         selected_type_widget = self.types_listWidget.itemWidget(self.types_listWidget.currentItem())
         if selected_type_widget is not None:
             return selected_type_widget.type_label.text()
+
+    def get_selected_asset_widget(self):
+        selected_asset_widget = self.asset_listWidget.itemWidget(self.asset_listWidget.currentItem())
+        if selected_asset_widget is not None:
+            return selected_asset_widget
 
     def populate_shows(self):
         self.show_comboBox.clear()
