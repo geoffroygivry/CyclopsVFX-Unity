@@ -100,7 +100,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.setupUi(self)
 
         self.Model = hm.Model()
-        self.populate_typeWidget()
+        self.types_tabWidget.setCurrentIndex(1)
+        self.populate_type_shot_Widget()
         self.populate_entities()
         self.get_type_asset()
 
@@ -119,31 +120,52 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         MainStyleSheet.setStyleSheet(self)
 
         # Signals
-        self.types_listWidget.currentItemChanged.connect(self.populate_entities)
+        self.shot_type_listWidget.currentItemChanged.connect(self.populate_entities)
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
 
-    def populate_typeWidget(self):
-        type_dict = {"All": "all_icon.png", "Cam": "cam_icon.png",
-                     "Layout": "layout_icon.png", "CG": "lgt_icon.png",
-                     "3D": "3D_icon.png", "Libs": "library_icon.png"}
+    def populate_type_shot_Widget(self):
+        type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
+                          "LGT": "lgt_icon.png", "ANM": "animation_icon.png",
+                          "DMP": "matte_painting_icon.png", "PNT": "pnt_icon.png",
+                          "RTO": "Roto_icon.png", "CMP": "cmp_icon.png"
+                          }
 
         # populating The left widget list part with different types of assets.
-        for n, v in type_dict.iteritems():
+        for n, v in sorted(type_shot_dict.iteritems()):
             icon_all = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", v)
             type_wid = Type_widget()
             type_wid.set_text(n)
             type_wid.set_icon(icon_all)
             wid2 = QtWidgets.QListWidgetItem()
             wid2.setSizeHint(type_wid.sizeHint())
-            self.types_listWidget.addItem(wid2)
-            self.types_listWidget.setContentsMargins(100, 100, 100, 100)
-            self.types_listWidget.setItemWidget(wid2, type_wid)
+            self.shot_type_listWidget.addItem(wid2)
+            self.shot_type_listWidget.setContentsMargins(100, 100, 100, 100)
+            self.shot_type_listWidget.setItemWidget(wid2, type_wid)
+
+    def populate_type_asset_Widget(self):
+        type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
+                          "LGT": "lgt_icon.png", "ANM": "animation_icon.png",
+                          "DMP": "matte_painting_icon.png", "PNT": "pnt_icon.png",
+                          "RTO": "Roto_icon.png", "CMP": "cmp_icon.png"
+                          }
+
+        # populating The left widget list part with different types of assets.
+        for n, v in sorted(type_shot_dict.iteritems()):
+            icon_all = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", v)
+            type_wid = Type_widget()
+            type_wid.set_text(n)
+            type_wid.set_icon(icon_all)
+            wid2 = QtWidgets.QListWidgetItem()
+            wid2.setSizeHint(type_wid.sizeHint())
+            self.assets_type_listWidget.addItem(wid2)
+            self.assets_type_listWidget.setContentsMargins(100, 100, 100, 100)
+            self.assets_type_listWidget.setItemWidget(wid2, type_wid)
 
     def populate_entities(self):
         self.asset_listWidget.clear()
         type_asset = self.get_type_asset()
-        if type_asset == "All":
+        if type_asset == "ALL":
             if self.latest_checkBox.isChecked():
                 assets = self.Model.get_all_latest_publish_shot(self.show_comboBox.currentText(), self.shot_comboBox.currentText())
             else:
@@ -178,7 +200,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         pass
 
     def get_type_asset(self):
-        selected_type_widget = self.types_listWidget.itemWidget(self.types_listWidget.currentItem())
+        selected_type_widget = self.shot_type_listWidget.itemWidget(self.shot_type_listWidget.currentItem())
         if selected_type_widget is not None:
             return selected_type_widget.type_label.text()
 

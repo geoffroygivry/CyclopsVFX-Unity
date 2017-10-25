@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main.ui'
+# Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main_v02.ui'
 #
-# Created: Sat Oct 21 22:25:43 2017
+# Created: Wed Oct 25 23:11:52 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -131,17 +131,47 @@ class Ui_brontes_main(object):
         self.bottom_verticalLayout.setObjectName("bottom_verticalLayout")
         self.bottom_horizontalLayout = QtGui.QHBoxLayout()
         self.bottom_horizontalLayout.setObjectName("bottom_horizontalLayout")
-        self.types_listWidget = QtGui.QListWidget(brontes_main)
+        self.types_tabWidget = QtGui.QTabWidget(brontes_main)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.types_listWidget.sizePolicy().hasHeightForWidth())
-        self.types_listWidget.setSizePolicy(sizePolicy)
-        self.types_listWidget.setMaximumSize(QtCore.QSize(200, 16777215))
-        self.types_listWidget.setSizeIncrement(QtCore.QSize(10, 0))
-        self.types_listWidget.setBaseSize(QtCore.QSize(10, 0))
-        self.types_listWidget.setObjectName("types_listWidget")
-        self.bottom_horizontalLayout.addWidget(self.types_listWidget)
+        sizePolicy.setHeightForWidth(self.types_tabWidget.sizePolicy().hasHeightForWidth())
+        self.types_tabWidget.setSizePolicy(sizePolicy)
+        self.types_tabWidget.setTabPosition(QtGui.QTabWidget.North)
+        self.types_tabWidget.setObjectName("types_tabWidget")
+        self.assets_tab = QtGui.QWidget()
+        self.assets_tab.setObjectName("assets_tab")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.assets_tab)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.assets_type_listWidget = QtGui.QListWidget(self.assets_tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.assets_type_listWidget.sizePolicy().hasHeightForWidth())
+        self.assets_type_listWidget.setSizePolicy(sizePolicy)
+        self.assets_type_listWidget.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.assets_type_listWidget.setSizeIncrement(QtCore.QSize(10, 0))
+        self.assets_type_listWidget.setBaseSize(QtCore.QSize(10, 0))
+        self.assets_type_listWidget.setObjectName("assets_type_listWidget")
+        self.horizontalLayout.addWidget(self.assets_type_listWidget)
+        self.types_tabWidget.addTab(self.assets_tab, "")
+        self.shot_tab = QtGui.QWidget()
+        self.shot_tab.setObjectName("shot_tab")
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.shot_tab)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.shot_type_listWidget = QtGui.QListWidget(self.shot_tab)
+        self.shot_type_listWidget.setObjectName("shot_type_listWidget")
+        self.verticalLayout_3.addWidget(self.shot_type_listWidget)
+        self.types_tabWidget.addTab(self.shot_tab, "")
+        self.libs_tab = QtGui.QWidget()
+        self.libs_tab.setObjectName("libs_tab")
+        self.verticalLayout_5 = QtGui.QVBoxLayout(self.libs_tab)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.libs_listWidget = QtGui.QListWidget(self.libs_tab)
+        self.libs_listWidget.setObjectName("libs_listWidget")
+        self.verticalLayout_5.addWidget(self.libs_listWidget)
+        self.types_tabWidget.addTab(self.libs_tab, "")
+        self.bottom_horizontalLayout.addWidget(self.types_tabWidget)
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.asset_listWidget = QtGui.QListWidget(brontes_main)
@@ -228,6 +258,7 @@ class Ui_brontes_main(object):
         self.verticalLayout_2.addLayout(self.bottom_verticalLayout)
 
         self.retranslateUi(brontes_main)
+        self.types_tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(brontes_main)
 
     def retranslateUi(self, brontes_main):
@@ -238,6 +269,9 @@ class Ui_brontes_main(object):
         self.poly_label.setText(QtGui.QApplication.translate("brontes_main", "Polyphemus ", None, QtGui.QApplication.UnicodeUTF8))
         self.latest_checkBox.setText(QtGui.QApplication.translate("brontes_main", "latest", None, QtGui.QApplication.UnicodeUTF8))
         self.search_button.setText(QtGui.QApplication.translate("brontes_main", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.assets_tab), QtGui.QApplication.translate("brontes_main", "Assets", None, QtGui.QApplication.UnicodeUTF8))
+        self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.shot_tab), QtGui.QApplication.translate("brontes_main", "Shot", None, QtGui.QApplication.UnicodeUTF8))
+        self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.libs_tab), QtGui.QApplication.translate("brontes_main", "Libraries", None, QtGui.QApplication.UnicodeUTF8))
         self.icon_detail.setText(QtGui.QApplication.translate("brontes_main", "icon Asset", None, QtGui.QApplication.UnicodeUTF8))
         self.version_detail_label.setText(QtGui.QApplication.translate("brontes_main", "<html><head/><body><p><span style=\" font-size:8pt; font-weight:600; color:#00557f;\">Version</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.task_detail_label.setText(QtGui.QApplication.translate("brontes_main", "<html><head/><body><p><span style=\" font-size:8pt; font-weight:600; color:#00557f;\">Task</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
