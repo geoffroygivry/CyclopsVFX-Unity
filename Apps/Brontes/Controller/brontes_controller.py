@@ -69,8 +69,8 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         self.setupUi(self)
         self.version_data.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
 
-    def set_icon(self, icon):
-        self.icon.setPixmap(QtGui.QPixmap(icon))
+    def set_icon(self, icon, width, height):
+        self.icon.setPixmap(QtGui.QPixmap(icon).scaled(width, height, QtCore.Qt.KeepAspectRatio))
 
     def set_username(self, text):
         self.userName.setText(text)
@@ -90,6 +90,9 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
     def set_version(self, text):
         self.version_data.setText("v{}".format(text))
         self.version_data.setStyleSheet("qproperty-alignment: AlignRight;")
+
+    def set_UUID(self, text):
+        self.UUID_label.setText(text)
 
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
@@ -121,6 +124,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
         # Signals
         self.shot_type_listWidget.currentItemChanged.connect(self.populate_entities)
+        # self.asset_listWidget.currentItemChanged.connect(self.populate_details)
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
 
@@ -172,22 +176,30 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 assets = []
             for asset in assets:
                 asset_widget = Asset_widget()
-                uuid_obj = utils.UUID(asset.get('UUID'), "shot")
+                asset_UUID = asset.get("UUID")
+                uuid_obj = utils.UUID(asset_UUID, "shot")
                 asset_widget.set_username(asset.get('publisher'))
                 pretty_date = utils.pretty_date(asset.get('pub_date'))
                 asset_widget.set_date(pretty_date)
                 asset_widget.set_task(uuid_obj.task())
                 asset_widget.set_name(uuid_obj.name())
                 if asset.get('type') == "2D":
-                    asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "Icon_2D_small.png"))
+                    UUID_thumbnail = os.path.join(os.getenv("SHOW_PATH"), os.getenv("SHOW"), "tmp", "thumbnails", "{}.jpg".format(asset_UUID))
+                    if os.path.isfile(UUID_thumbnail):
+                        asset_widget.set_icon(UUID_thumbnail, 75, (75 / 1.775))
+                    else:
+                        asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "cyc_small.png"), 75, 75)
+
                     first_frame = int(asset.get('first_frame'))
                     last_frame = int(asset.get('last_frame'))
                     asset_widget.set_frameRange(first_frame, last_frame)
                 if asset.get('type') == "script":
-                    asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "script_small.png"))
+                    asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "script_small.png"), 75, 75)
                     asset_widget.frame_range_label.hide()
                     asset_widget.frame_range_data.hide()
                 asset_widget.set_version(uuid_obj.version())
+                asset_widget.set_UUID(asset.get('UUID'))
+                asset_widget.UUID_label.hide()
                 wid2 = QtWidgets.QListWidgetItem()
                 asset_widget.setProperty("asset", True)
                 wid2.setSizeHint(asset_widget.sizeHint())
@@ -195,9 +207,6 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 self.asset_listWidget.setItemWidget(wid2, asset_widget)
                 self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
                 wid2.setBackground(QtGui.QColor(45, 45, 45))
-
-    def populate_details(self):
-        pass
 
     def get_type_asset(self):
         selected_type_widget = self.shot_type_listWidget.itemWidget(self.shot_type_listWidget.currentItem())

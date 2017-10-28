@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
+    <width>615</width>
     <height>71</height>
    </rect>
   </property>
@@ -205,6 +205,13 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="UUID_label">
+     <property name="text">
+      <string>UUID</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

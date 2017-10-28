@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Apps/Brontes/View/asset_widget.ui'
 #
-# Created: Sat Sep 30 22:14:53 2017
+# Created: Sat Oct 28 20:50:46 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Asset_Widget(object):
     def setupUi(self, Asset_Widget):
         Asset_Widget.setObjectName("Asset_Widget")
-        Asset_Widget.resize(576, 71)
+        Asset_Widget.resize(615, 71)
         self.horizontalLayout = QtGui.QHBoxLayout(Asset_Widget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.icon = QtGui.QLabel(Asset_Widget)
@@ -101,6 +101,9 @@ class Ui_Asset_Widget(object):
         self.date.setObjectName("date")
         self.Main_gridLayout.addWidget(self.date, 0, 1, 1, 1)
         self.horizontalLayout.addLayout(self.Main_gridLayout)
+        self.UUID_label = QtGui.QLabel(Asset_Widget)
+        self.UUID_label.setObjectName("UUID_label")
+        self.horizontalLayout.addWidget(self.UUID_label)
 
         self.retranslateUi(Asset_Widget)
         QtCore.QMetaObject.connectSlotsByName(Asset_Widget)
@@ -136,4 +139,5 @@ class Ui_Asset_Widget(object):
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7pt; color:#646464;\">version:</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.date.setText(QtGui.QApplication.translate("Asset_Widget", "22/11/2017 at 11:30 by", None, QtGui.QApplication.UnicodeUTF8))
+        self.UUID_label.setText(QtGui.QApplication.translate("Asset_Widget", "UUID", None, QtGui.QApplication.UnicodeUTF8))
 
