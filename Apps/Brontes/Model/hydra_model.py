@@ -41,6 +41,9 @@ class Model():
     def get_all_publish_by_task(self, show_name, shot_name, task_name):
         return unity.get_response("{}/api/unity/{}/{}?published=all&task={}".format(cfg.POLY_SERVER, show_name, shot_name, task_name))
 
+    def get_unity_response(self, url):
+        return unity.get_response(url)
+
     def get_active_shows(self):
         return [x.get('name') for x in db.shows.find({"active": True})]
 

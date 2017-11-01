@@ -128,6 +128,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
         self.latest_checkBox.stateChanged.connect(self.populate_entities)
+        self.poly_lineEdit.returnPressed.connect(self.populate_entities_by_polyphemus)
 
     def populate_type_shot_Widget(self):
         type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
@@ -169,8 +170,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.assets_type_listWidget.setContentsMargins(100, 100, 100, 100)
             self.assets_type_listWidget.setItemWidget(wid2, type_wid)
 
-    def populate_entities(self):
-        self.asset_listWidget.clear()
+    def get_assets_by_type(self):
         type_asset = self.get_type_asset()
         assets = []
         if type_asset == "ALL":
@@ -185,6 +185,16 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                     assets = self.Model.get_latest_publish_by_task(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), task)
                 else:
                     assets = self.Model.get_all_publish_by_task(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), task)
+        return assets
+
+    def get_assets_by_polyphemus(self):
+        return self.Model.get_unity_response(self.poly_lineEdit.text())
+
+    def get_assets_by_search(self):
+        pass
+
+    def populate_widget_entities(self, assets):
+        self.asset_listWidget.clear()
         for asset in assets:
             asset_widget = Asset_widget()
             asset_UUID = asset.get("UUID")
@@ -218,6 +228,17 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.asset_listWidget.setItemWidget(wid2, asset_widget)
             self.asset_listWidget.setStyleSheet("QListWidget::item {margin-bottom: 4px; background-color: rgb(45,45,45);}")
             wid2.setBackground(QtGui.QColor(45, 45, 45))
+
+    def populate_entities(self):
+        self.poly_lineEdit.clear()
+        self.latest_checkBox.setEnabled(True)
+        self.populate_widget_entities(self.get_assets_by_type())
+
+    def populate_entities_by_polyphemus(self):
+        self.assets_type_listWidget.clearSelection()
+        self.shot_type_listWidget.clearSelection()
+        self.latest_checkBox.setEnabled(False)
+        self.populate_widget_entities(self.get_assets_by_polyphemus())
 
     def populate_details(self):
         selected_asset_widget = self.get_selected_asset_widget()
