@@ -129,6 +129,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
         self.latest_checkBox.stateChanged.connect(self.populate_entities)
         self.poly_lineEdit.returnPressed.connect(self.populate_entities_by_polyphemus)
+        self.search_lineEdit.returnPressed.connect(self.populate_entities_by_search)
+        self.search_button.clicked.connect(self.populate_entities_by_search)
 
     def populate_type_shot_Widget(self):
         type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
@@ -191,7 +193,11 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         return self.Model.get_unity_response(self.poly_lineEdit.text())
 
     def get_assets_by_search(self):
-        pass
+        search_query = self.search_lineEdit.text()
+        if self.latest_checkBox.isChecked():
+            return self.Model.get_latest_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
+        else:
+            return self.Model.get_all_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
 
     def populate_widget_entities(self, assets):
         self.asset_listWidget.clear()
@@ -237,8 +243,15 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     def populate_entities_by_polyphemus(self):
         self.assets_type_listWidget.clearSelection()
         self.shot_type_listWidget.clearSelection()
+        self.search_lineEdit.clear()
         self.latest_checkBox.setEnabled(False)
         self.populate_widget_entities(self.get_assets_by_polyphemus())
+
+    def populate_entities_by_search(self):
+        self.poly_lineEdit.clear()
+        self.assets_type_listWidget.clearSelection()
+        self.shot_type_listWidget.clearSelection()
+        self.populate_widget_entities(self.get_assets_by_search())
 
     def populate_details(self):
         selected_asset_widget = self.get_selected_asset_widget()
