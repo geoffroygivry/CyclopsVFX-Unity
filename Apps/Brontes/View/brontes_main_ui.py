@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main_v02.ui'
 #
-# Created: Sat Oct 28 22:56:58 2017
+# Created: Tue Nov  7 11:55:58 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,7 +22,7 @@ class Ui_brontes_main(object):
         self.cyc_icon = QtGui.QLabel(brontes_main)
         self.cyc_icon.setMaximumSize(QtCore.QSize(150, 16777215))
         self.cyc_icon.setText("")
-        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../../../../Core/config/icons/cyc_small.png"))
+        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../../../../../../../../../../Core/config/icons/cyc_small.png"))
         self.cyc_icon.setObjectName("cyc_icon")
         self.top_horizontal_layout.addWidget(self.cyc_icon)
         self.vertical_divider = QtGui.QFrame(brontes_main)
@@ -117,7 +117,7 @@ class Ui_brontes_main(object):
         self.mid_horizontal_layout.addWidget(self.search_lineEdit)
         self.search_button = QtGui.QToolButton(brontes_main)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../../../../../../../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.search_button.setIcon(icon)
         self.search_button.setObjectName("search_button")
         self.mid_horizontal_layout.addWidget(self.search_button)
@@ -175,6 +175,8 @@ class Ui_brontes_main(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.asset_listWidget = QtGui.QListWidget(brontes_main)
+        self.asset_listWidget.setDragEnabled(True)
+        self.asset_listWidget.setDragDropMode(QtGui.QAbstractItemView.DragOnly)
         self.asset_listWidget.setObjectName("asset_listWidget")
         self.verticalLayout_4.addWidget(self.asset_listWidget)
         self.bottom_textBrowser = QtGui.QTextBrowser(brontes_main)

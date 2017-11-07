@@ -30,7 +30,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../../../../../Core/config/icons/cyc_small.png</pixmap>
+          <pixmap>../../../../../../../../../../../../Core/config/icons/cyc_small.png</pixmap>
          </property>
         </widget>
        </item>
@@ -251,7 +251,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../../Core/config/icons/search.png</normaloff>../../../../../../Core/config/icons/search.png</iconset>
+         <normaloff>../../../../../../../../../../../../Core/config/icons/search.png</normaloff>../../../../../../../../../../../../Core/config/icons/search.png</iconset>
        </property>
       </widget>
      </item>
@@ -342,7 +342,14 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QListWidget" name="asset_listWidget"/>
+          <widget class="QListWidget" name="asset_listWidget">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QTextBrowser" name="bottom_textBrowser">

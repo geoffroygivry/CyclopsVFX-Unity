@@ -94,6 +94,21 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
     def set_UUID(self, text):
         self.UUID_label.setText(text)
 
+    def set_path(self, text):
+        self.path_label.setText(text)
+
+    def mouseMoveEvent(self, event):
+        # drag and drop system based on text only. valid for nuke now.
+        # TODO make sure that needs to live in the hook for nuke.
+        # TODO try to improve the drag and drop with a more robust system : nuke.createNode('Read') etc ...
+        if not self.path_label.text():
+            return
+        mimeData = QtCore.QMimeData()
+        mimeData.setText(self.path_label.text())
+        drag = QtGui.QDrag(self)
+        drag.setMimeData(mimeData)
+        drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction, QtCore.Qt.CopyAction)
+
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     # main window UI
@@ -226,7 +241,9 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 asset_widget.frame_range_data.hide()
             asset_widget.set_version(uuid_obj.version())
             asset_widget.set_UUID(asset.get('UUID'))
+            asset_widget.set_path(asset.get('path'))
             asset_widget.UUID_label.hide()
+            asset_widget.path_label.hide()
             wid2 = QtWidgets.QListWidgetItem()
             asset_widget.setProperty("asset", True)
             wid2.setSizeHint(asset_widget.sizeHint())
