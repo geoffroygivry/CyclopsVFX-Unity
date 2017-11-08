@@ -2,7 +2,7 @@
 
 ## Welcome to CyclopsVFX Unity! ##
 
-### A beta release is scheduled for Sept/Oct 2017. At the meantime, if you have any questions, please open an issue and I'll reply ASAP. Contributors are more than welcome if you are interested in the project. Thank you! ###
+### A beta release is scheduled for Jan/Feb 2018. At the meantime, if you have any questions, please open an issue and I'll reply ASAP. Contributors are more than welcome if you are interested in the project. Thank you! ###
 
 **CyclopsVFX**, is an Open Source Production Tracking and visual effects pipeline toolkit, for VFX, Video Game and Animation projects. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
 
