@@ -12,7 +12,7 @@
 
 #### Roadmap ####
 
-The Sept/Oct Beta Version is aiming of:
+The Jan/Feb Beta Version is aiming of:
 
 - Having a fully working web app (Polyphemus) working flawlessly with the python framework (Unity) for Maya and Nuke. ClarisseIFX and Houdini will come later.
 - Having simple but full featured publishing system.
