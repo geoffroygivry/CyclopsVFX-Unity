@@ -4,7 +4,7 @@
 
 ### A beta release is scheduled for Sept/Oct 2017. At the meantime, if you have any questions, please open an issue and I'll reply ASAP. Contributors are more than welcome if you are interested in the project. Thank you! ###
 
-**CyclopsVFX**, is an Open Source Production Tracking Software and pipeline toolkit, for your **VFX, Video Game and Animation pipeline**. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
+**CyclopsVFX**, is an Open Source Production Tracking and visual effects pipeline toolkit, for VFX, Video Game and Animation projects. CyclopsVFX has 2 main Frameworks : **Unity** and **Polyphemus**. 
 
 **Unity** is the framework that connects programs such as **Nuke, Maya, Mari, Clarisse IFX** together. It is mostly written in **python** and uses popular libraries like **PySide** and **PyQt4**. 
 
@@ -12,7 +12,7 @@
 
 #### Roadmap ####
 
-The Sept/Oct Beta Version is aiming of:
+The Jan/Feb Beta Version is aiming of:
 
 - Having a fully working web app (Polyphemus) working flawlessly with the python framework (Unity) for Maya and Nuke. ClarisseIFX and Houdini will come later.
 - Having simple but full featured publishing system.
