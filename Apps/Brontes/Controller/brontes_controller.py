@@ -120,6 +120,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.Model = hm.Model()
         self.types_tabWidget.setCurrentIndex(1)
         self.populate_type_shot_Widget()
+        self.populate_type_asset_Widget()
         self.populate_entities()
         self.get_type_asset()
 
@@ -168,15 +169,18 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.shot_type_listWidget.setItemWidget(wid2, type_wid)
 
     def populate_type_asset_Widget(self):
-        type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
-                          "LGT": "lgt_icon.png", "ANM": "animation_icon.png",
-                          "DMP": "matte_painting_icon.png", "PNT": "pnt_icon.png",
-                          "RTO": "Roto_icon.png", "CMP": "cmp_icon.png",
-                          "SFX": "sfx_icon.png"
-                          }
+        type_asset_dict = {"ALL": "all_icon.png",
+                           "CPA": "Concept_art_icon.png",
+                           "MOD": "modeling_icon.png",
+                           "TXT": "texture_icon.png",
+                           "RIG": "rigging_icon.png",
+                           "LYT": "layout_icon.png",
+                           "CRE": "Creature_icon.png",
+                           "SHD": "SHD_icon.png"
+                           }
 
         # populating The left widget list part with different types of assets.
-        for n, v in sorted(type_shot_dict.iteritems()):
+        for n, v in sorted(type_asset_dict.iteritems()):
             icon_all = os.path.join(os.getenv("CYC_CORE_PATH"), "icons", v)
             type_wid = Type_widget()
             type_wid.set_text(n)
@@ -305,30 +309,3 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         if os.getenv('SHOT') in shots:
             self.shot_comboBox.setCurrentIndex(shots.index(os.getenv('SHOT')))
 
-
-def float_in_nuke():
-    float_in_nuke.panel = Brontes()
-    float_in_nuke.panel.show()
-
-
-def dock_in_nuke():
-    import nuke
-    from nukescripts import panels
-    pane = nuke.getPaneFor("io.cyclopsvfx.Brontes")
-    panels.registerWidgetAsPanel('brontes_controller.Brontes', 'Brontes',
-                                 'io.cyclopsvfx.Brontes', True).addToPane(pane)
-
-
-def runStandalone():
-    app = QtWidgets.QApplication(sys.argv)
-    panel = Brontes()
-    panel.show()
-    app.exec_()
-
-
-if __name__ == "__main__":
-    runStandalone()
-
-# to run it within nuke:
-# from Apps.Brontes.Controller import brontes_controller
-# brontes_controller.dock_in_nuke()

@@ -32,14 +32,26 @@ class Model():
     def get_all_latest_publish_shot(self, show_name, shot_name):
         return unity.get_response("{}/api/unity/{}/{}?published=latest".format(cfg.POLY_SERVER, show_name, shot_name))
 
+    def get_all_latest_publish_asset(self, show_name):
+        return unity.get_response("{}/api/unity/{}/assets?published=latest".format(cfg.POLY_SERVER, show_name))
+
+    def get_all_publish_asset(self, show_name):
+        return unity.get_response("{}/api/unity/{}/assets?published=all".format(cfg.POLY_SERVER, show_name))
+
     def get_all_publish_shot(self, show_name, shot_name):
         return unity.get_response("{}/api/unity/{}/{}?published=all".format(cfg.POLY_SERVER, show_name, shot_name))
 
     def get_latest_publish_by_task(self, show_name, shot_name, task_name):
         return unity.get_response("{}/api/unity/{}/{}?published=latest&task={}".format(cfg.POLY_SERVER, show_name, shot_name, task_name))
 
+    def get_latest_asset_publish_by_task(self, show_name, task_name):
+        return unity.get_response("{}/api/unity/{}/assets?published=latest&task={}".format(cfg.POLY_SERVER, show_name, task_name))
+
     def get_all_publish_by_task(self, show_name, shot_name, task_name):
         return unity.get_response("{}/api/unity/{}/{}?published=all&task={}".format(cfg.POLY_SERVER, show_name, shot_name, task_name))
+
+    def get_all_publish_assets_by_task(self, show_name, task_name):
+        return unity.get_response("{}/api/unity/{}/assets?published=all&task={}".format(cfg.POLY_SERVER, show_name, task_name))
 
     def get_unity_response(self, url):
         return unity.get_response(url)

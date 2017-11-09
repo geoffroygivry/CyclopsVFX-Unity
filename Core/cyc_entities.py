@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright (c) 2015 Geoffroy Givry
+# Copyright (c) 2017 Geoffroy Givry
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -153,3 +153,5 @@ class Cyc_Publish(object):
         if self.entity_type == "asset":
             if self.show is not None and self.asset is not None and self.task is not None and self.version is not None:
                 return "{}_{}_{}_{}_v{}_{}".format(self.show, self.asset, self.task, self.version, datetime.datetime.utcnow().isoformat())
+
+    # TODO create the insertion in the database. Don't forget to removed the UUID in the latest field of the shots and assets and populate the new one in it,
