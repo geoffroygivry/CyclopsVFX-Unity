@@ -122,7 +122,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.populate_type_shot_Widget()
         self.populate_type_asset_Widget()
         self.populate_entities()
-        self.get_type_asset()
+        self.get_type_shot()
 
         self.populate_shows()  # populates list of actives shows in the show combobox
         self.populate_seqs()  # populates list of sequences in the seq combobox
@@ -138,8 +138,12 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
         MainStyleSheet.setStyleSheet(self)
 
+        # >> DEBUG
+        print self.types_tabWidget.currentIndex()
+
         # Signals
         self.shot_type_listWidget.currentItemChanged.connect(self.populate_entities)
+        self.assets_type_listWidget.currentItemChanged.connect(self.populate_entities)
         self.asset_listWidget.currentItemChanged.connect(self.populate_details)
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
@@ -147,6 +151,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.poly_lineEdit.returnPressed.connect(self.populate_entities_by_polyphemus)
         self.search_lineEdit.returnPressed.connect(self.populate_entities_by_search)
         self.search_button.clicked.connect(self.populate_entities_by_search)
+        self.types_tabWidget.currentChanged.connect(self.tab_changed)
 
     def populate_type_shot_Widget(self):
         type_shot_dict = {"ALL": "all_icon.png", "CAM": "cam_icon.png",
@@ -191,8 +196,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.assets_type_listWidget.setContentsMargins(100, 100, 100, 100)
             self.assets_type_listWidget.setItemWidget(wid2, type_wid)
 
-    def get_assets_by_type(self):
-        type_asset = self.get_type_asset()
+    def get_shot_entities_by_type(self):
+        type_asset = self.get_type_shot()
         assets = []
         if type_asset == "ALL":
             if self.latest_checkBox.isChecked():
@@ -208,10 +213,27 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                     assets = self.Model.get_all_publish_by_task(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), task)
         return assets
 
-    def get_assets_by_polyphemus(self):
+    def get_asset_entities_by_type(self):
+        type_asset = self.get_type_assets()
+        assets = []
+        if type_asset == "ALL":
+            if self.latest_checkBox.isChecked():
+                assets = self.Model.get_all_latest_publish_asset(self.show_comboBox.currentText())
+            else:
+                assets = self.Model.get_all_publish_asset(self.show_comboBox.currentText())
+        asset_tasks = ['CPA', 'MOD', 'TXT', 'RIG', 'LYT', 'CRE', 'SHD']
+        for task in asset_tasks:
+            if type_asset == task:
+                if self.latest_checkBox.isChecked():
+                    assets = self.Model.get_latest_asset_publish_by_task(self.show_comboBox.currentText(), task)
+                else:
+                    assets = self.Model.get_all_publish_assets_by_task(self.show_comboBox.currentText(), task)
+        return assets
+
+    def get_entities_by_polyphemus(self):
         return self.Model.get_unity_response(self.poly_lineEdit.text())
 
-    def get_assets_by_search(self):
+    def get_entities_by_search(self):
         search_query = self.search_lineEdit.text()
         if self.latest_checkBox.isChecked():
             return self.Model.get_latest_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
@@ -223,7 +245,15 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         for asset in assets:
             asset_widget = Asset_widget()
             asset_UUID = asset.get("UUID")
-            uuid_obj = utils.UUID(asset_UUID, "shot")
+            if self.types_tabWidget.currentIndex() == 0:
+                uuid_obj = utils.UUID(asset_UUID, "asset")
+                if not uuid_obj.task() == 'TXT':
+                    asset_widget.frame_range_data.hide()
+                    asset_widget.frame_range_label.hide()
+                else:
+                    asset_widget.frame_range_label.setText("UDIM")
+            if self.types_tabWidget.currentIndex() == 1:
+                uuid_obj = utils.UUID(asset_UUID, "shot")
             asset_widget.set_username(asset.get('publisher'))
             pretty_date = utils.pretty_date(asset.get('pub_date'))
             asset_widget.set_date(pretty_date)
@@ -259,20 +289,23 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     def populate_entities(self):
         self.poly_lineEdit.clear()
         self.latest_checkBox.setEnabled(True)
-        self.populate_widget_entities(self.get_assets_by_type())
+        if self.types_tabWidget.currentIndex() == 0:
+            self.populate_widget_entities(self.get_asset_entities_by_type())
+        if self.types_tabWidget.currentIndex() == 1:
+            self.populate_widget_entities(self.get_shot_entities_by_type())
 
     def populate_entities_by_polyphemus(self):
         self.assets_type_listWidget.clearSelection()
         self.shot_type_listWidget.clearSelection()
         self.search_lineEdit.clear()
         self.latest_checkBox.setEnabled(False)
-        self.populate_widget_entities(self.get_assets_by_polyphemus())
+        self.populate_widget_entities(self.get_entities_by_polyphemus())
 
     def populate_entities_by_search(self):
         self.poly_lineEdit.clear()
         self.assets_type_listWidget.clearSelection()
         self.shot_type_listWidget.clearSelection()
-        self.populate_widget_entities(self.get_assets_by_search())
+        self.populate_widget_entities(self.get_entities_by_search())
 
     def populate_details(self):
         selected_asset_widget = self.get_selected_asset_widget()
@@ -280,8 +313,13 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         hmtl_detail = "<font size=3 color=orange><strong>Path:</strong></font><br/><font color=cyan>|-></font> {}<br/><font size=3 color=orange><strong>Script:</strong></font><br/><font color=cyan>|-></font> {}".format(publish_obj.get("path"), publish_obj.get("script"))
         self.bottom_textBrowser.setHtml(hmtl_detail)
 
-    def get_type_asset(self):
+    def get_type_shot(self):
         selected_type_widget = self.shot_type_listWidget.itemWidget(self.shot_type_listWidget.currentItem())
+        if selected_type_widget is not None:
+            return selected_type_widget.type_label.text()
+
+    def get_type_assets(self):
+        selected_type_widget = self.assets_type_listWidget.itemWidget(self.assets_type_listWidget.currentItem())
         if selected_type_widget is not None:
             return selected_type_widget.type_label.text()
 
@@ -309,3 +347,9 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         if os.getenv('SHOT') in shots:
             self.shot_comboBox.setCurrentIndex(shots.index(os.getenv('SHOT')))
 
+    def tab_changed(self):
+        self.asset_listWidget.clear()
+        self.assets_type_listWidget.clearSelection()
+        self.assets_type_listWidget.setCurrentRow(-1)
+        self.shot_type_listWidget.clearSelection()
+        self.shot_type_listWidget.setCurrentRow(-1)
