@@ -32,7 +32,6 @@ import NukeCollect
 import explorer
 import AxisSnapAnim
 import reloadReadNodes
-import openNukeScriptMetadata
 import mari_bridge
 import rotateCenter
 import ToDoList

@@ -59,8 +59,14 @@ class Model():
     def get_all_publish_by_search(self, show_name, shot_name, search_pattern):
         return unity.get_response("{}/api/unity/{}/{}?published=all&{}".format(cfg.POLY_SERVER, show_name, shot_name, search_pattern))
 
+    def get_all_asset_publish_by_search(self, show_name, search_pattern):
+        return unity.get_response("{}/api/unity/{}/assets?published=all&{}".format(cfg.POLY_SERVER, show_name, search_pattern))
+
     def get_latest_publish_by_search(self, show_name, shot_name, search_pattern):
         return unity.get_response("{}/api/unity/{}/{}?published=latest&{}".format(cfg.POLY_SERVER, show_name, shot_name, search_pattern))
+
+    def get_latest_asset_publish_by_search(self, show_name, search_pattern):
+        return unity.get_response("{}/api/unity/{}/assets?published=latest&{}".format(cfg.POLY_SERVER, show_name, search_pattern))
 
     def get_active_shows(self):
         return [x.get('name') for x in db.shows.find({"active": True})]

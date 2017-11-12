@@ -236,9 +236,15 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     def get_entities_by_search(self):
         search_query = self.search_lineEdit.text()
         if self.latest_checkBox.isChecked():
-            return self.Model.get_latest_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
+            if self.types_tabWidget.currentIndex() == 0:
+                return self.Model.get_latest_asset_publish_by_search(self.show_comboBox.currentText(), search_query)
+            if self.types_tabWidget.currentIndex() == 1:
+                return self.Model.get_latest_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
         else:
-            return self.Model.get_all_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
+            if self.types_tabWidget.currentIndex() == 0:
+                return self.Model.get_all_asset_publish_by_search(self.show_comboBox.currentText(), search_query)
+            if self.types_tabWidget.currentIndex() == 1:
+                return self.Model.get_all_publish_by_search(self.show_comboBox.currentText(), self.shot_comboBox.currentText(), search_query)
 
     def populate_widget_entities(self, assets):
         self.asset_listWidget.clear()
@@ -273,6 +279,8 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "script_small.png"), 75, 75)
                 asset_widget.frame_range_label.hide()
                 asset_widget.frame_range_data.hide()
+            if uuid_obj.task() == "MOD":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "mod_256.png"), 75, 75)
             asset_widget.set_version(uuid_obj.version())
             asset_widget.set_UUID(asset.get('UUID'))
             asset_widget.set_path(asset.get('path'))
