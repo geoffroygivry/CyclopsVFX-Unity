@@ -281,6 +281,16 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
                 asset_widget.frame_range_data.hide()
             if uuid_obj.task() == "MOD":
                 asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "mod_256.png"), 75, 75)
+            if uuid_obj.task() == "TXT":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "txt_256.png"), 75, 75)
+            if uuid_obj.task() == "SHD":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "shd_256.png"), 75, 75)
+            if uuid_obj.task() == "CRE":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "cre_256.png"), 75, 75)
+            if uuid_obj.task() == "RIG":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "rig_256.png"), 75, 75)
+            if uuid_obj.task() == "LYT":
+                asset_widget.set_icon(os.path.join(os.getenv("CYC_ICON"), "lyt_256.png"), 75, 75)
             asset_widget.set_version(uuid_obj.version())
             asset_widget.set_UUID(asset.get('UUID'))
             asset_widget.set_path(asset.get('path'))
