@@ -24,6 +24,7 @@
 
 
 import nuke
+import nukescripts
 import os
 import json
 import autobackdrop
@@ -51,6 +52,7 @@ from Apps.Brontes.Hooks import nuke_brontes
 
 import geoffroy_callbacks
 geoffroy_callbacks.register_callbacks()
+nukescripts.addDropDataCallback(nuke_brontes.dropper)
 
 # nuke.Root() callback
 nuke.addOnUserCreate(load_frame_range.in_nuke)

@@ -42,3 +42,17 @@ def dock_in_nuke():
     pane = nuke.getPaneFor("io.cyclopsvfx.Brontes_nuke")
     panels.registerWidgetAsPanel('nuke_brontes.Brontes_nuke', 'Brontes_nuke',
                                  'io.cyclopsvfx.Brontes_nuke', True).addToPane(pane)
+
+def dropper(mimeType, text):
+    from Hydra.core import connect_db as con
+    db = con.server.hydra
+    if not mimeType == 'text/plain':
+        return False
+    asset = db.publish.find_one({"UUID": text})
+    if asset.get('type') == "2D":
+        asset_path = asset.get('path')
+        asset_path = asset_path.replace(asset_path.split('.')[-2], "%04d")
+        asset_first = asset.get('first_frame')
+        asset_last = asset.get('last_frame')
+        nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
+

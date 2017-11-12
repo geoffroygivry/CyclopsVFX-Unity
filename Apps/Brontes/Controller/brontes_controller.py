@@ -101,10 +101,10 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         # drag and drop system based on text only. valid for nuke now.
         # TODO make sure that needs to live in the hook for nuke.
         # TODO try to improve the drag and drop with a more robust system : nuke.createNode('Read') etc ...
-        if not self.path_label.text():
+        if not self.UUID_label.text():
             return
         mimeData = QtCore.QMimeData()
-        mimeData.setText(self.path_label.text())
+        mimeData.setText(self.UUID_label.text())
         drag = QtGui.QDrag(self)
         drag.setMimeData(mimeData)
         drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction, QtCore.Qt.CopyAction)
@@ -371,3 +371,4 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.assets_type_listWidget.setCurrentRow(-1)
         self.shot_type_listWidget.clearSelection()
         self.shot_type_listWidget.setCurrentRow(-1)
+
