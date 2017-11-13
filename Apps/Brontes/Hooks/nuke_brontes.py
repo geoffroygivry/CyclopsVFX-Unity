@@ -25,11 +25,13 @@ import os
 import sys
 
 from Apps.Brontes.Controller import brontes_controller
+from PySide import QtGui, QtCore
 
 
 class Brontes_nuke(brontes_controller.Brontes):
     def __init__(self):
         super(Brontes_nuke, self).__init__()
+
 
 def float_in_nuke():
     float_in_nuke.panel = Brontes_nuke()
@@ -43,6 +45,7 @@ def dock_in_nuke():
     panels.registerWidgetAsPanel('nuke_brontes.Brontes_nuke', 'Brontes_nuke',
                                  'io.cyclopsvfx.Brontes_nuke', True).addToPane(pane)
 
+
 def dropper(mimeType, text):
     from Hydra.core import connect_db as con
     db = con.server.hydra
@@ -54,5 +57,5 @@ def dropper(mimeType, text):
         asset_path = asset_path.replace(asset_path.split('.')[-2], "%04d")
         asset_first = asset.get('first_frame')
         asset_last = asset.get('last_frame')
-        nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
-
+        asset_read = nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
+    return True

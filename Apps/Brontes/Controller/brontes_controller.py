@@ -107,7 +107,8 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         mimeData.setText(self.UUID_label.text())
         drag = QtGui.QDrag(self)
         drag.setMimeData(mimeData)
-        drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction, QtCore.Qt.CopyAction)
+        # drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction, QtCore.Qt.CopyAction)
+        drag.exec_()
 
 
 class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
@@ -371,4 +372,3 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.assets_type_listWidget.setCurrentRow(-1)
         self.shot_type_listWidget.clearSelection()
         self.shot_type_listWidget.setCurrentRow(-1)
-
