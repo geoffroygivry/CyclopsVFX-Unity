@@ -78,4 +78,5 @@ class Model():
         return [x.get('name') for x in db.shots.find({"show": show_name, "seq": seq_name})]
 
     def get_publish(self, UUID_name):
-        return db.publish.find_one({"UUID": UUID_name})
+        if UUID_name is not None:
+            return db.publish.find_one({"UUID": UUID_name})

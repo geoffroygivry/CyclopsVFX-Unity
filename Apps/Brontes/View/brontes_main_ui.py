@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Apps/Brontes/View/Brontes_main_v02.ui'
+# Form implementation generated from reading ui file 'Brontes_main_v02.ui'
 #
-# Created: Tue Nov  7 11:55:58 2017
+# Created: Thu Nov 16 19:08:20 2017
 #      by: pyside-uic 0.2.13 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,7 +22,7 @@ class Ui_brontes_main(object):
         self.cyc_icon = QtGui.QLabel(brontes_main)
         self.cyc_icon.setMaximumSize(QtCore.QSize(150, 16777215))
         self.cyc_icon.setText("")
-        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../../../../../../../../../../Core/config/icons/cyc_small.png"))
+        self.cyc_icon.setPixmap(QtGui.QPixmap("../../../../../../../../../../../../../../../../../../../../../../../../Core/config/icons/cyc_small.png"))
         self.cyc_icon.setObjectName("cyc_icon")
         self.top_horizontal_layout.addWidget(self.cyc_icon)
         self.vertical_divider = QtGui.QFrame(brontes_main)
@@ -117,7 +117,7 @@ class Ui_brontes_main(object):
         self.mid_horizontal_layout.addWidget(self.search_lineEdit)
         self.search_button = QtGui.QToolButton(brontes_main)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../../../../../../../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../../../../../../../../../../../../../../../../../../../../../Core/config/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.search_button.setIcon(icon)
         self.search_button.setObjectName("search_button")
         self.mid_horizontal_layout.addWidget(self.search_button)
@@ -179,6 +179,24 @@ class Ui_brontes_main(object):
         self.asset_listWidget.setDragDropMode(QtGui.QAbstractItemView.DragOnly)
         self.asset_listWidget.setObjectName("asset_listWidget")
         self.verticalLayout_4.addWidget(self.asset_listWidget)
+        self.central_icon_verticalLayout = QtGui.QVBoxLayout()
+        self.central_icon_verticalLayout.setObjectName("central_icon_verticalLayout")
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.central_icon_verticalLayout.addItem(spacerItem2)
+        self.central_icon_label = QtGui.QLabel(brontes_main)
+        font = QtGui.QFont()
+        font.setFamily("DejaVu Sans Mono")
+        font.setPointSize(50)
+        font.setWeight(75)
+        font.setBold(True)
+        self.central_icon_label.setFont(font)
+        self.central_icon_label.setStyleSheet("color:grey")
+        self.central_icon_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.central_icon_label.setObjectName("central_icon_label")
+        self.central_icon_verticalLayout.addWidget(self.central_icon_label)
+        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.central_icon_verticalLayout.addItem(spacerItem3)
+        self.verticalLayout_4.addLayout(self.central_icon_verticalLayout)
         self.bottom_textBrowser = QtGui.QTextBrowser(brontes_main)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -217,7 +235,7 @@ class Ui_brontes_main(object):
         self.verticalLayout_2.addLayout(self.bottom_verticalLayout)
 
         self.retranslateUi(brontes_main)
-        self.types_tabWidget.setCurrentIndex(1)
+        self.types_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(brontes_main)
 
     def retranslateUi(self, brontes_main):
@@ -231,4 +249,5 @@ class Ui_brontes_main(object):
         self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.assets_tab), QtGui.QApplication.translate("brontes_main", "Assets", None, QtGui.QApplication.UnicodeUTF8))
         self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.shot_tab), QtGui.QApplication.translate("brontes_main", "Shot", None, QtGui.QApplication.UnicodeUTF8))
         self.types_tabWidget.setTabText(self.types_tabWidget.indexOf(self.libs_tab), QtGui.QApplication.translate("brontes_main", "Libraries", None, QtGui.QApplication.UnicodeUTF8))
+        self.central_icon_label.setText(QtGui.QApplication.translate("brontes_main", "CYC", None, QtGui.QApplication.UnicodeUTF8))
 

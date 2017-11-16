@@ -20,7 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys
 import os
 
 
@@ -107,7 +106,6 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         mimeData.setText(self.UUID_label.text())
         drag = QtGui.QDrag(self)
         drag.setMimeData(mimeData)
-        # drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction, QtCore.Qt.CopyAction)
         drag.exec_()
 
 
@@ -118,6 +116,10 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         # Set up the user interface from Designer.
         self.setupUi(self)
 
+        self.spacer01 = self.central_icon_verticalLayout.itemAt(0)
+        self.cyc_icon_label = self.central_icon_label
+        self.spacer02 = self.central_icon_verticalLayout.itemAt(2)
+        self.toggle_central_icon()
         self.Model = hm.Model()
         self.types_tabWidget.setCurrentIndex(1)
         self.populate_type_shot_Widget()
@@ -147,6 +149,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.assets_type_listWidget.currentItemChanged.connect(self.populate_entities)
         self.asset_listWidget.currentItemChanged.connect(self.populate_details)
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
+        self.shot_comboBox.currentIndexChanged.connect(self.tab_changed)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
         self.latest_checkBox.stateChanged.connect(self.populate_entities)
         self.poly_lineEdit.returnPressed.connect(self.populate_entities_by_polyphemus)
@@ -306,12 +309,16 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             wid2.setBackground(QtGui.QColor(45, 45, 45))
 
     def populate_entities(self):
-        self.poly_lineEdit.clear()
-        self.latest_checkBox.setEnabled(True)
-        if self.types_tabWidget.currentIndex() == 0:
-            self.populate_widget_entities(self.get_asset_entities_by_type())
-        if self.types_tabWidget.currentIndex() == 1:
-            self.populate_widget_entities(self.get_shot_entities_by_type())
+        try:
+            self.poly_lineEdit.clear()
+            self.latest_checkBox.setEnabled(True)
+            if self.types_tabWidget.currentIndex() == 0:
+                self.populate_widget_entities(self.get_asset_entities_by_type())
+            if self.types_tabWidget.currentIndex() == 1:
+                self.populate_widget_entities(self.get_shot_entities_by_type())
+        except AttributeError:
+            self.asset_listWidget.clear()
+        self.toggle_central_icon()
 
     def populate_entities_by_polyphemus(self):
         self.assets_type_listWidget.clearSelection()
@@ -372,3 +379,25 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.assets_type_listWidget.setCurrentRow(-1)
         self.shot_type_listWidget.clearSelection()
         self.shot_type_listWidget.setCurrentRow(-1)
+
+    def hide_central_icon(self):
+        self.cyc_icon_label.hide()
+        self.spacer01.changeSize(0,0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
+        self.spacer02.changeSize(0,0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
+        self.asset_listWidget.show()
+
+    def show_central_icon(self):
+        self.spacer01.changeSize(20,40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.spacer02.changeSize(20,40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.cyc_icon_label.show()
+        self.asset_listWidget.hide()
+
+    def toggle_central_icon(self):
+        if self.asset_listWidget.count() == 0:
+            self.show_central_icon()
+        else:
+            self.hide_central_icon()
+
+
+# TODO weird issue if you start to use at startup Poly search. it hangs...
+# when using search, make sure that the latest_checkBox is enabled.

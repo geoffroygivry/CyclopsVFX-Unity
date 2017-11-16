@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import nuke
 import os
-import sys
-
+import nuke
+import nukescripts
+from Core.config import extensions as ext
 from Apps.Brontes.Controller import brontes_controller
-from PySide import QtGui, QtCore
+from Core.utils import cyc_utils as utils
 
 
 class Brontes_nuke(brontes_controller.Brontes):
@@ -49,13 +49,27 @@ def dock_in_nuke():
 def dropper(mimeType, text):
     from Hydra.core import connect_db as con
     db = con.server.hydra
-    if not mimeType == 'text/plain':
-        return False
-    asset = db.publish.find_one({"UUID": text})
-    if asset.get('type') == "2D":
-        asset_path = asset.get('path')
-        asset_path = asset_path.replace(asset_path.split('.')[-2], "%04d")
-        asset_first = asset.get('first_frame')
-        asset_last = asset.get('last_frame')
-        asset_read = nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
-    return True
+    if mimeType == 'text/plain':
+        asset = db.publish.find_one({"UUID": text})
+        UUID_obj = utils.UUID(text, "shot")
+        if asset is not None:
+            asset_path = asset.get('path')
+            filename, file_extension = os.path.splitext(asset_path)
+            if file_extension in ext.valid_2D_ext:
+                asset_path = asset_path.replace(asset_path.split('.')[-2], "%04d")
+                asset_first = asset.get('first_frame')
+                asset_last = asset.get('last_frame')
+                nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
+            if file_extension in ext.valid_scripts:
+                if asset_path is not None:
+                    print asset
+                    nuke.scriptSource(asset_path)
+            if file_extension in ext.valid_geos:
+                nuke.createNode('ReadGeo2', 'file {}'.format(asset_path))
+            if file_extension in ext.valid_cams and UUID_obj.task() == "CAM":
+                nuke.createNode('Camera2', 'file {}'.format(asset_path))
+            print asset_path
+            return True
+        else:
+            return False
+    return False
