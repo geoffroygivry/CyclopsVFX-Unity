@@ -20,11 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from pymongo import MongoClient
-from Core.config import cyc_config as cfg
+import connect_db as con
 
-server = MongoClient(cfg.MONGODB)
-db = server['hydra']
+server = con.server
+db = server.hydra
 
 
 def create_show(long_name, code_name):

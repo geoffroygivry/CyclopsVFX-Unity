@@ -87,10 +87,10 @@ def json_to_dict(json_file):
 def check_entity(submission_task):
     tasks_json = ('./Core/config/tasks.json')
     tasks_dict = json_to_dict(tasks_json)
-    
+
     Asset_tasks = tasks_dict.get('asset_tasks')
     Shot_tasks = tasks_dict.get('shot_tasks')
-    
+
     check = None
 
     for task in Asset_tasks:
@@ -98,25 +98,82 @@ def check_entity(submission_task):
             check = "asset"
             break
 
-    if check == None:
+    if check is None:
         for task in Shot_tasks:
             if task in submission_task:
                 check = "shot"
                 break
 
     return check
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+def pretty_date(iso_date):
+    format = "%a %d %b %Y at %H:%M:%S"
+    datetime_date = convert_isotime_to_datetime(iso_date)
+    return datetime_date.strftime(format)
+
+
+class UUID():
+    """
+    Direction of use:
+    publish_uuid_pattern_asset = "RBY_awning01_for_me-I-think_MOD_v03_2017-10-06T23:05:47.17900"
+    publish_uuid_pattern_shot = "RBY_MANOR_010_rubbishboy_Final_09_CMP_v04_2017-10-03T22:43:43.17900"
+
+    pub_uuid_asset = UUID(publish_uuid_pattern_asset, "asset")
+    pub_uuid_shot = UUID(publish_uuid_pattern_shot, "shot")
+    """
+
+    def __init__(self, uuid_pattern, uuid_type):
+        self.uuid = uuid_pattern
+        self.uuid_type = uuid_type
+        self.match_pattern = self.match()
+
+    def compiled_uuid_asset(self):
+        return re.compile('^(?P<show_name>[A-Za-z0-9]+)_(?P<asset_name>[A-Za-z0-9_\-]+)_(?P<task_name>[A-Z]{3})_[Vv](?P<version>\d+)_(?P<iso_date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{5})')
+
+    def compiled_uuid_shot(self):
+        return re.compile('^(?P<show_name>[A-Z0-9]{3})_(?P<shot_name>[a-zA-Z]+_[0-9]{3})_(?P<description>[A-Za-z_0-9]+)_(?P<task_name>[A-Z]{3})_[vV](?P<version>\d{2})_(?P<iso_date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{5})')
+
+    def match(self):
+        if self.uuid_type == "asset":
+            compiled_uuid_pattern = self.compiled_uuid_asset()
+        else:
+            compiled_uuid_pattern = self.compiled_uuid_shot()
+        match = compiled_uuid_pattern.match(self.uuid)
+        return match
+
+    def check_uuid(self):
+        if self.match_pattern:
+            return True
+        else:
+            return False
+
+    def show(self):
+        if self.check_uuid():
+            return self.match_pattern.group('show_name')
+
+    def shot(self):
+        if self.check_uuid():
+            if self.uuid_type == 'shot':
+                return self.match_pattern.group('shot_name')
+            else:
+                return None
+
+    def name(self):
+        if self.check_uuid():
+            if self.uuid_type == 'asset':
+                return self.match_pattern.group('asset_name')
+            else:
+                return self.match_pattern.group('description')
+
+    def task(self):
+        if self.check_uuid():
+            return self.match_pattern.group('task_name')
+
+    def version(self):
+        if self.check_uuid():
+            return self.match_pattern.group('version')
+
+    def date(self):
+        if self.check_uuid():
+            return self.match_pattern.group('iso_date')

@@ -71,7 +71,7 @@
      <property name="font">
       <font>
        <family>Cantarell</family>
-       <pointsize>14</pointsize>
+       <pointsize>10</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>

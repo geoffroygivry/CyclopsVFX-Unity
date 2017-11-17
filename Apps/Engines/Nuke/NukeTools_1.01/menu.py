@@ -24,6 +24,7 @@
 
 
 import nuke
+import nukescripts
 import os
 import json
 import autobackdrop
@@ -32,7 +33,6 @@ import NukeCollect
 import explorer
 import AxisSnapAnim
 import reloadReadNodes
-import openNukeScriptMetadata
 import mari_bridge
 import rotateCenter
 import ToDoList
@@ -47,10 +47,12 @@ import saveTheScript
 import load_frame_range
 from Apps.Steropes.SteropesDailies.Nuke import steropesDailies
 from Apps.Steropes.SteropesPublish.ui import PublishUi
+from Apps.Brontes.Hooks import nuke_brontes
 
 
 import geoffroy_callbacks
 geoffroy_callbacks.register_callbacks()
+nukescripts.addDropDataCallback(nuke_brontes.dropper)
 
 # nuke.Root() callback
 nuke.addOnUserCreate(load_frame_range.in_nuke)
@@ -203,6 +205,8 @@ try:
         menu2.addSeparator()
         menu2.addCommand('Steropes/Dailies Submission', 'steropesDailies.start()')
         menu2.addCommand('Steropes/Publish Submission', 'PublishUi.runInNuke()')
+        menu2.addSeparator()
+        menu2.addCommand('Brontes/Dock In Nuke', 'nuke_brontes.dock_in_nuke()')
     else:
         menu2 = nuke.menu('Nuke').addMenu('No Env Mode').setEnabled(False)
 
@@ -217,7 +221,6 @@ Geoff = nuke.menu('Nuke').addMenu('CyclopsVFX')
 
 
 Geoff.addSeparator()
-
 
 Geoff.addCommand('Reload Sanbox module', 'reloadSandboxModule()')
 

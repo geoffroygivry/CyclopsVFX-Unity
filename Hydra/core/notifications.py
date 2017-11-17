@@ -45,7 +45,7 @@ def push_notifications(publisher, suscribers, type_, shotname, isodate):
     month_later = datetime_now + datetime.timedelta(+30)
 
     _id = db.notifications.insert(
-        {"publisher": publisher, "type": type_, "shot": shotname, "ExpireAt": month_later, "date": isodate}
+        {"publisher": publisher, "type": type_, "shot": shotname, "expireAt": month_later, "date": isodate}
     )
 
     for suscriber in suscribers:
