@@ -97,9 +97,6 @@ class Asset_widget(QtWidgets.QWidget, asset_widget.Ui_Asset_Widget):
         self.path_label.setText(text)
 
     def mouseMoveEvent(self, event):
-        # drag and drop system based on text only. valid for nuke now.
-        # TODO make sure that needs to live in the hook for nuke.
-        # TODO try to improve the drag and drop with a more robust system : nuke.createNode('Read') etc ...
         if not self.UUID_label.text():
             return
         mimeData = QtCore.QMimeData()
@@ -146,12 +143,15 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
         # Signals
         self.shot_type_listWidget.currentItemChanged.connect(self.populate_entities)
+        self.shot_type_listWidget.currentItemChanged.connect(self.clear_search_lineEdit)
         self.assets_type_listWidget.currentItemChanged.connect(self.populate_entities)
+        self.assets_type_listWidget.currentItemChanged.connect(self.clear_search_lineEdit)
         self.asset_listWidget.currentItemChanged.connect(self.populate_details)
         self.show_comboBox.currentIndexChanged.connect(self.populate_seqs)
         self.shot_comboBox.currentIndexChanged.connect(self.tab_changed)
         self.seq_comboBox.currentIndexChanged.connect(self.populate_shots)
         self.latest_checkBox.stateChanged.connect(self.populate_entities)
+        self.latest_checkBox.stateChanged.connect(self.populate_entities_by_search_toggle)
         self.poly_lineEdit.returnPressed.connect(self.populate_entities_by_polyphemus)
         self.search_lineEdit.returnPressed.connect(self.populate_entities_by_search)
         self.search_button.clicked.connect(self.populate_entities_by_search)
@@ -326,18 +326,29 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.search_lineEdit.clear()
         self.latest_checkBox.setEnabled(False)
         self.populate_widget_entities(self.get_entities_by_polyphemus())
+        self.toggle_central_icon()
 
     def populate_entities_by_search(self):
         self.poly_lineEdit.clear()
-        self.assets_type_listWidget.clearSelection()
-        self.shot_type_listWidget.clearSelection()
+        self.tab_changed()
         self.populate_widget_entities(self.get_entities_by_search())
+        self.toggle_central_icon()
+
+    def populate_entities_by_search_toggle(self):
+        # This method has been made to separate on the same button "latest" the method by search and the method by the type list widget. th if statement does not work on th signals themself. That's why I had to create this callback.
+        if not self.search_lineEdit.text() == "":
+            self.populate_entities_by_search()
+
+    def clear_search_lineEdit(self):
+        if self.assets_type_listWidget.currentRow() != -1 or self.shot_type_listWidget.currentRow() != -1:
+            self.search_lineEdit.clear()
 
     def populate_details(self):
         selected_asset_widget = self.get_selected_asset_widget()
-        publish_obj = self.Model.get_publish(selected_asset_widget.UUID_label.text())
-        hmtl_detail = "<font size=3 color=orange><strong>Path:</strong></font><br/><font color=cyan>|-></font> {}<br/><font size=3 color=orange><strong>Script:</strong></font><br/><font color=cyan>|-></font> {}".format(publish_obj.get("path"), publish_obj.get("script"))
-        self.bottom_textBrowser.setHtml(hmtl_detail)
+        if selected_asset_widget is not None:
+            publish_obj = self.Model.get_publish(selected_asset_widget.UUID_label.text())
+            hmtl_detail = "<font size=3 color=orange><strong>Path:</strong></font><br/><font color=cyan>|-></font> {}<br/><font size=3 color=orange><strong>Script:</strong></font><br/><font color=cyan>|-></font> {}".format(publish_obj.get("path"), publish_obj.get("script"))
+            self.bottom_textBrowser.setHtml(hmtl_detail)
 
     def get_type_shot(self):
         selected_type_widget = self.shot_type_listWidget.itemWidget(self.shot_type_listWidget.currentItem())
@@ -379,6 +390,7 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.assets_type_listWidget.setCurrentRow(-1)
         self.shot_type_listWidget.clearSelection()
         self.shot_type_listWidget.setCurrentRow(-1)
+        self.bottom_textBrowser.clear()
 
     def hide_central_icon(self):
         self.cyc_icon_label.hide()
@@ -397,6 +409,15 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
             self.show_central_icon()
         else:
             self.hide_central_icon()
+
+    def clear_secondary_widgets(self):
+        self.Version_detail_listWidget.clear()
+        self.search_lineEdit.clear()
+        self.poly_lineEdit.clear()
+
+    def debug(self):
+        if not self.search_lineEdit.text() == "":
+            print ">> yes"
 
 
 # TODO weird issue if you start to use at startup Poly search. it hangs...
