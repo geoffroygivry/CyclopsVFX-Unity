@@ -62,7 +62,6 @@ def dropper(mimeType, text):
                 nuke.createNode('Read', 'file {0} first {1} last {2} origfirst {1} origlast {2}'.format(asset_path, asset_first, asset_last))
             if file_extension in ext.valid_scripts:
                 if asset_path is not None:
-                    print asset
                     nuke.scriptSource(asset_path)
             if file_extension in ext.valid_geos:
                 nuke.createNode('ReadGeo2', 'file {}'.format(asset_path))

@@ -394,13 +394,13 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
     def hide_central_icon(self):
         self.cyc_icon_label.hide()
-        self.spacer01.changeSize(0,0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
-        self.spacer02.changeSize(0,0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
+        self.spacer01.changeSize(0, 0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
+        self.spacer02.changeSize(0, 0, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Ignored)
         self.asset_listWidget.show()
 
     def show_central_icon(self):
-        self.spacer01.changeSize(20,40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.spacer02.changeSize(20,40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.spacer01.changeSize(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.spacer02.changeSize(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.cyc_icon_label.show()
         self.asset_listWidget.hide()
 
@@ -418,7 +418,3 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
     def debug(self):
         if not self.search_lineEdit.text() == "":
             print ">> yes"
-
-
-# TODO weird issue if you start to use at startup Poly search. it hangs...
-# when using search, make sure that the latest_checkBox is enabled.
