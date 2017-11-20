@@ -138,9 +138,6 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
 
         MainStyleSheet.setStyleSheet(self)
 
-        # >> DEBUG
-        print self.types_tabWidget.currentIndex()
-
         # Signals
         self.shot_type_listWidget.currentItemChanged.connect(self.populate_entities)
         self.shot_type_listWidget.currentItemChanged.connect(self.clear_search_lineEdit)
@@ -414,7 +411,3 @@ class Brontes(QtWidgets.QWidget, b_UI.Ui_brontes_main):
         self.Version_detail_listWidget.clear()
         self.search_lineEdit.clear()
         self.poly_lineEdit.clear()
-
-    def debug(self):
-        if not self.search_lineEdit.text() == "":
-            print ">> yes"
